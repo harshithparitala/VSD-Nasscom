@@ -215,6 +215,54 @@ Used for Physical Verification DRC & LVS
 **Command:** `rm [file]`
 **Description:** Removes (deletes) the specified file or directory.
 
+   <details>
+  <summary><b> Topic 3.2 :</b> Run 'picorv32a' design synthesis using OpenLANE flow and generate necessary outputs </summary>   
+  <br>
+# Commands to Invoke the OpenLANE Flow and Perform Synthesis
+
+## 1. Change to OpenLANE Directory
+
+**Command:** `cd Desktop/work/tools/openlane_working_dir/openlane`
+**Description:** Navigates to the directory where the OpenLANE flow is installed. This location contains all scripts, configuration files, and flow management utilities.
+
+## 2. Launch OpenLANE Docker Container
+
+**Command:** `docker`
+**Description:** Starts the OpenLANE Docker container using a predefined alias. The alias sets up required volume mounts and environment variables, making it easier to access files on the host system from within the Docker container.
+
+## 3. Start OpenLANE Interactive Mode
+
+**Command:** `./flow.tcl -interactive`
+**Description:** Launches the OpenLANE flow in interactive mode using its Tcl-based script. This mode allows users to execute each stage of the design flow manually and observe results.
+
+## 4. Load OpenLANE Package
+
+**Command:** `package require openlane 0.9`
+**Description:** Loads the OpenLANE package (version 0.9) inside the Tcl shell. This step is necessary to access flow-specific commands.
+
+## 5. Prepare the Design
+
+**Command:** `prep -design picorv32a`
+**Description:** Initializes and prepares the `picorv32a` design. This creates the required directory structure, copies configuration files, and sets up the environment for the selected design.
+
+## 6. Run Synthesis
+
+**Command:** `run_synthesis`
+**Description:** Runs the synthesis step on the loaded design. The synthesis tool (typically Yosys) transforms the RTL (Verilog) into a gate-level representation that can be used for placement and routing.
+
+## 7. Exit OpenLANE Flow
+
+**Command:** `exit`
+**Description:** Exits from the OpenLANE interactive Tcl environment.
+
+## 8. Exit Docker Container
+
+**Command:** `exit`
+**Description:** Terminates the Docker container session and returns control to the host machine shell.
+
+
+Screenshots of these running commands respectively given below 
 
    </details> 
+</details>
 </details>
