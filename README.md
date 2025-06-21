@@ -4,7 +4,7 @@
 <summary><b>Day 1:</b>  Inception of open-source EDA, OpenLANE and Sky130 PDK </summary>   
 <br>
   <details>
-  <summary><b>Day 1:</b>  Introduction to QFN-48,Package,Die,Core and IP's </summary>   
+  <summary><b> Topic 1:</b>  Introduction to QFN-48,Package,Die,Core and IP's </summary>   
   <br>
 
 ![image](https://github.com/user-attachments/assets/58f6da45-1282-499a-89b8-46f8cf8eab01)
