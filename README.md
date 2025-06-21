@@ -264,6 +264,41 @@ Basic Linux Commands
 
 Screenshots of these running commands respectively given below 
 
+
+/home/vsduser/Pictures/flopratio.png
+/home/vsduser/Pictures/openlane1.1.png
+/home/vsduser/Pictures/synthesis successful .png
+
+# Flop Ratio Calculation
+
+## Definition
+
+* **Flop Ratio**
+  $\text{Flop Ratio} = \dfrac{\text{Number of D Flip‑Flops}}{\text{Total Number of Cells}}$
+* **Percentage of D Flip‑Flops**
+  $\%\text{ DFFs} = \text{Flop Ratio} \times 100$
+
+## Example (from Synthesis Statistics)
+
+| Metric                        | Value   |
+| ----------------------------- | ------- |
+| Number of D Flip‑Flops (DFFs) | `1613`  |
+| Total Number of Cells         | `14876` |
+
+**Step‑by‑Step Calculation:**
+
+1. **Flop Ratio**
+   $\frac{1613}{14876} \approx 0.108429685$
+2. **Percentage of DFFs**
+   $0.108429685 \times 100 \approx 10.84296854\,\%$
+
+## Interpretation
+
+Approximately **10.84 %** of the synthesized cells are D Flip‑Flops. A lower or higher ratio affects clock‑tree complexity, power consumption, and timing closure effort, so this metric helps gauge sequential logic density during design analysis.
+
+
+
+
    </details> 
 </details>
 </details>
