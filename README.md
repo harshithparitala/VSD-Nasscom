@@ -165,4 +165,10 @@ Used for Physical Verification DRC & LVS
 
     
 </details>  
+   <details>
+  <summary><b> Topic 3:</b> familarization to EDA Tool </summary>   
+  <br>
+
+
+   </details> 
 </details>
