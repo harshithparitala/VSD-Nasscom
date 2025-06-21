@@ -484,5 +484,11 @@ The area between die and core blocks for cell placement and it is reserved for p
 ![image](https://github.com/user-attachments/assets/53c0c696-46ac-4b3a-918e-a40e31ba2c0f)
 
 </details>
+
+<details>
+<summary><b>1.Labs:</b> Run FLoorPlan using OpenLane and review files  </summary>   
+<br>
+
+</details>
 </details>
 
