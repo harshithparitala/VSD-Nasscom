@@ -264,7 +264,6 @@ Basic Linux Commands
 
 Screenshots of these running commands respectively given below 
 
-https://github.com/user-attachments/assets/40959b9a-8df6-4c85-b58f-81234bd6e32f)
 ![Image](https://github.com/user-attachments/assets/0e02917f-eb99-42b3-8c61-b680e318c423)
 ![Image](https://github.com/user-attachments/assets/6123c647-742e-4056-a955-95308591750a)
 
@@ -295,6 +294,7 @@ https://github.com/user-attachments/assets/40959b9a-8df6-4c85-b58f-81234bd6e32f)
 
 Approximately **10.84 %** of the synthesized cells are D Flip‑Flops. A lower or higher ratio affects clock‑tree complexity, power consumption, and timing closure effort, so this metric helps gauge sequential logic density during design analysis.
 
+![Image](https://github.com/user-attachments/assets/40959b9a-8df6-4c85-b58f-81234bd6e32f)
 
 
 
