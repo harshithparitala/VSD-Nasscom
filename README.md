@@ -168,6 +168,52 @@ Used for Physical Verification DRC & LVS
    <details>
   <summary><b> Topic 3:</b> familarization to EDA Tool </summary>   
   <br>
+# Basic Linux Commands
+
+## ls
+
+**Command:** `ls [options] [directory]`
+**Description:** Lists the contents of a directory. If no directory is specified, it lists the contents of the current directory.
+**Options:**
+
+* `-l`: Displays detailed information (permissions, owner, size, etc.)
+* `-a`: Includes hidden files
+* `-r`: Reverses the order of the listing
+
+## pwd
+
+**Command:** `pwd`
+**Description:** Prints the full pathname of the current working directory.
+
+## mkdir
+
+**Command:** `mkdir [directory_name]`
+**Description:** Creates a new directory with the specified `directory_name`.
+
+## ls -ltr
+
+**Command:** `ls -ltr`
+**Description:** Lists the contents of the directory in long format (`-l`), sorted by modification time (`-t`), in reverse order (`-r`). Useful for viewing the most recently modified files at the end of the list.
+
+## help
+
+**Command:** `help [command]`
+**Description:** Displays information about the built-in shell commands. If no command is specified, it shows a list of all available commands.
+
+## man
+
+**Command:** `man [command]`
+**Description:** Displays the manual page for the specified command, providing detailed usage information.
+
+## cp
+
+**Command:** `cp [source] [destination]`
+**Description:** Copies files or directories from the source to the destination.
+
+## rm
+
+**Command:** `rm [file]`
+**Description:** Removes (deletes) the specified file or directory.
 
 
    </details> 
