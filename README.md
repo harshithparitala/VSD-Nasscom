@@ -301,3 +301,148 @@ Approximately **10.84 %** of the synthesized cells are D Flip‑Flops. A lowe
    </details> 
 </details>
 </details>
+
+
+
+
+
+<details>
+<summary><b>Day 2:</b> Good floorplan vs bad floorplan and introduction to library cells </summary>   
+<br>
+  <details>
+<summary><b>Topic 1:</b> Chip Floor PLanning Considerations </summary>   
+<br>
+
+  <details>
+<summary><b>1.1:</b> Utilization factor and Aspect ratio </summary>   
+<br>
+
+In the physical design flow the first step is defining the height and width of the core
+![Screenshot 2024-10-06 103517](https://github.com/user-attachments/assets/55cbf2f4-132a-4c1c-9cc3-e1c8d83e9402)
+
+Let's take an example of basic netlist consists of two flipflops and logic gates
+
+![Screenshot 2024-10-06 103537](https://github.com/user-attachments/assets/e0e31ced-9a20-47e2-ae46-70af543fad70)
+
+In this we are dependent on the dimensiions of logic gates and flipflops ,
+lets assume standard cells are having an area of 1sq.unit and same are for flipflops as well
+
+![Screenshot 2024-10-06 103552](https://github.com/user-attachments/assets/dd9a07af-9991-450d-a626-b13241f0caf1)
+
+If we bring all the standard cells and flip flops together and caluclate the are area gives the minium area occupied by the netlist
+
+![Screenshot 2024-10-06 103615](https://github.com/user-attachments/assets/bcda6bb0-055f-495d-8914-8afcb65d0a77)
+
+If we place the netlist inside the core , we have seen that netlist completely occupies the core which means it has 100% utilization  of the core 
+
+![Screenshot 2024-10-06 103640](https://github.com/user-attachments/assets/d520aa3a-f585-4649-a52b-2c6a5691a615)
+
+Utilization factor is given by Area occupied by the netlist to Total Area of core
+
+![Screenshot 2024-10-06 103640](https://github.com/user-attachments/assets/9f9cd759-85fb-4967-837a-a47003fa7b53)
+
+Aspect Ratio is given by Height to the Width of the core .
+
+Another example where the dimensions of the netlist is same and core is different 
+![Screenshot 2024-10-06 103713](https://github.com/user-attachments/assets/38922f37-b0dd-40ce-bee5-beffd35e40aa)
+
+In this case the utilization factor is 0.5
+And Aspect ratio is also 0.5
+
+![Screenshot 2024-10-06 103746](https://github.com/user-attachments/assets/5168dd59-b0d1-4952-a1bf-0d5750bf4cd5)
+
+</details>
+
+  <details>
+<summary><b>1.2:</b> Concept of pre placed cells </summary>   
+<br>
+  cells that are placed in the core of a design before the placement and routing stages
+
+Lets take an example of combinational logic circuit and output of the combinational logic is huge circuit
+
+![Screenshot 2024-10-06 113528](https://github.com/user-attachments/assets/08b0ddf1-ca4e-4255-9d18-e2d7d01d0dd3)
+
+so, we cut /divide the circuit into differnt parts .
+
+![Screenshot 2024-10-06 113545](https://github.com/user-attachments/assets/c38d10ed-1fad-44d5-b279-212c7dc78d25)
+
+lets assume circuit is divided into two parts and we separate into two different blocks and implemented separately 
+These blocks are considered as Black box .
+
+![Screenshot 2024-10-06 113556](https://github.com/user-attachments/assets/e1a64ef4-8f6e-4436-935e-2da2d43ef3cd)
+
+If these blocks are replicated multiple times on the chip, We implement this block once and reused multiple times whenever it requires in the cihp.
+
+![Screenshot 2024-10-06 113613](https://github.com/user-attachments/assets/c08ed8a3-62f3-4369-a9c6-e0fb8264822d)
+
+Similarly there are other IP's are also avaliable. These are called pre-placed cells.
+
+![Screenshot 2024-10-06 113633](https://github.com/user-attachments/assets/6be43725-f05b-42b5-a9b9-f831a13110ad)
+
+    
+</details>
+
+  <details>
+<summary><b>1.3:</b>Decoupling capacitors </summary>   
+<br>
+After placing the pre placed cells in the core , we need to surround them with the Decoupling capacitors .
+
+![Screenshot 2024-10-06 120830](https://github.com/user-attachments/assets/ea3485d6-07ca-4da4-a1b7-000c4a5024ed)
+
+ Lets consider this circuit is a part of any block of pre placed cells , whenever any gate switches from logic 0 to logic 1 there is some amount of current that demands , there is some capacitance setting over gate that capacitence needs to completely charge to represent logic 1 , this amount of charge is sent by power supply 
+ Suppouse if the transition happening from logic 1 to logic 0, it is the responsibility of vss to take amount of charge .The capacitor will discharge 
+
+![Screenshot 2024-10-06 120848](https://github.com/user-attachments/assets/7c7aabdb-32e8-40f5-86b8-25db971dba76)
+
+ There will be some voltage drop across the wire and if the voltage vdd' is should be noise margin .
+ Any voltage lies between Vil and Vih is undefined region , it's also called grey region.it can go either logic 0 or logic 1
+ 
+![Screenshot 2024-10-06 120939](https://github.com/user-attachments/assets/2b4668c0-5f7f-4147-9e27-14ab81329360)
+
+ We can ensure that voltage never lies in undefined region with the help of Decoupling capacitors , These capacitors decouples the circuit from main supply
+ 
+![Screenshot 2024-10-06 120952](https://github.com/user-attachments/assets/918978d7-d1b1-4949-959f-76c8d7fb7a69)
+
+ whenever switching happen decoupling capacitor will the current to circuit and these are placed very close to the circuit 
+
+ ![Screenshot 2024-10-06 121012](https://github.com/user-attachments/assets/c8149a7c-8595-47ac-9f08-39a67413a1d7)
+
+</details>
+
+
+  <details>
+<summary><b>1.4:</b>Power planning</summary>   
+<br>
+    Let us consider the circuit as Black box (macron). If this macron is repeated multiple times on the chip and there will be current demand for each and every macron
+
+![Screenshot 2024-10-06 124925 - Copy](https://github.com/user-attachments/assets/cdffd4e9-fe6e-49c2-be8f-8a964c51ec24)
+
+Let's there is a signal driven to load signal is transition from logic 0 to logic 1. we have to make sure that the signal path maintains same signal that load receives.
+
+![Screenshot 2024-10-06 124934 - Copy](https://github.com/user-attachments/assets/3878b9b6-3720-45b1-9c70-4857848efab6)
+
+let connect the power supply, these bllocks are tapped to vdd and ground respectively 
+
+Since there is no De coupling capacitor near path the power supply need to take care of sinal. Powe supply is far to the path and there will be voltage drop happens 
+![Screenshot 2024-10-06 124954 - Copy](https://github.com/user-attachments/assets/d8df73ad-051f-45aa-87a1-9e591140017a)
+
+let's assume it is a 16-bit bus , If the bit is logic 1 it says the capacitor which is being charge to vdd similary logic 0 refers to capacitor discharged to ground
+![Screenshot 2024-10-06 125020](https://github.com/user-attachments/assets/78c47552-ddb0-4c7d-9ca0-cb6ccfdc71da)
+
+Let's  say it is connected to inverter , the  output will be all the capacitors are charged  to logic 1 and will discharge to logic 0 and it will cause a bump called as ground bounce 
+
+![Screenshot 2024-10-06 125036](https://github.com/user-attachments/assets/9e573661-fd58-4beb-a06c-51b49e9ab351)
+
+similarly logic 0 to logic 1  cause voltage droop
+
+![Screenshot 2024-10-06 125051](https://github.com/user-attachments/assets/8f8d48c2-6d7c-4b1c-9fc6-20431602b571)
+
+It is due to power is coming from single source, if there are multiple power supplies we can ensure that it will give current or drop current to the circuit 
+
+![Screenshot 2024-10-06 125102](https://github.com/user-attachments/assets/615a5621-4f42-40c2-b01f-90fa24bf5c21)
+
+![Screenshot 2024-10-06 125120](https://github.com/user-attachments/assets/fcea00dd-8e24-449f-b497-b5131f0f25bc)
+</details>
+
+
+</details>
