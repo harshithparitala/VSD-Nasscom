@@ -264,10 +264,9 @@ Basic Linux Commands
 
 Screenshots of these running commands respectively given below 
 
-
-/home/vsduser/Pictures/flopratio.png
-/home/vsduser/Pictures/openlane1.1.png
-/home/vsduser/Pictures/synthesis successful .png
+https://github.com/user-attachments/assets/40959b9a-8df6-4c85-b58f-81234bd6e32f)
+![Image](https://github.com/user-attachments/assets/0e02917f-eb99-42b3-8c61-b680e318c423)
+![Image](https://github.com/user-attachments/assets/6123c647-742e-4056-a955-95308591750a)
 
 # Flop Ratio Calculation
 
