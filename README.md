@@ -168,7 +168,7 @@ Used for Physical Verification DRC & LVS
    <details>
   <summary><b> Topic 3:</b> familarization to EDA Tool </summary>   
   <br>
-# Basic Linux Commands
+## Basic Linux Commands
 
 ## ls
 
@@ -218,7 +218,7 @@ Used for Physical Verification DRC & LVS
    <details>
   <summary><b> Topic 3.2 :</b> Run 'picorv32a' design synthesis using OpenLANE flow and generate necessary outputs </summary>   
   <br>
-# Commands to Invoke the OpenLANE Flow and Perform Synthesis
+## #Commands to Invoke the OpenLANE Flow and Perform Synthesis
 
 ## 1. Change to OpenLANE Directory
 
