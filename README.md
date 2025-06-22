@@ -585,8 +585,8 @@ One common thing across all the stages are "GATES or CELLS".
     </details>
   </details>
 
-
-     <details>
+</details>
+    <details>
 <summary><b>Topic3</b>Cell Design and Characterization Flow </summary>   
 <br>
 
