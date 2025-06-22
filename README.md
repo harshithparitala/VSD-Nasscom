@@ -583,5 +583,9 @@ One common thing across all the stages are "GATES or CELLS".
 <summary><b>Lab:</b>library binding and placement </summary>   
 <br>
     </details>
+     <details>
+<summary><b>Topic3</b>library binding and placement </summary>   
+<br>
+    </details>
 </details>
 
