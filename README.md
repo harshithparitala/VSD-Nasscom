@@ -491,7 +491,7 @@ The area between die and core blocks for cell placement and it is reserved for p
 
 </details>
 
-  <details>
+<details>
 <summary><b>Topic 2:</b>library binding and placement </summary>   
 <br>
    <details>
