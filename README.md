@@ -741,6 +741,7 @@ Transition time:
 
   </details>
 
+</details>
 
 <details>
 <summary><b>Day 3</b>Design library cell using Magic Layout and ngspice characterization </summary>   
