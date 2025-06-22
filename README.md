@@ -681,7 +681,7 @@ These steps are feed in characterization software called GUNA and we generate Ti
     </details>
 
 
- <details>
+<details>
 <summary><b>Topic4</b>General timing characterization parameters </summary>   
 <br>
 Timming characterization:
