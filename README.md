@@ -748,5 +748,4 @@ Transition time:
 
 
     
-</details>
 
