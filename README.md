@@ -586,7 +586,7 @@ One common thing across all the stages are "GATES or CELLS".
   </details>
 
   <details>
-<summary><b>Topic3</b>Cell Design and Characterization Flow </summary>   
+<summary><b>Topic 3</b>Cell Design and Characterization Flow </summary>   
 <br>
 
 We have the placement and routed version of the chip .If we pick up the cells over the chip ,these cells are called Standard Cells.
@@ -682,7 +682,7 @@ These steps are feed in characterization software called GUNA and we generate Ti
 
 
 <details>
-<summary><b>Topic4</b>General timing characterization parameters </summary>   
+<summary><b>Topic 4</b>General timing characterization parameters </summary>   
 <br>
 Timming characterization:
 --
@@ -739,13 +739,12 @@ Transition time:
 --
 ![Screenshot 2024-10-08 195532](https://github.com/user-attachments/assets/34457052-5d4e-4470-8c3d-c4d9c053e918)
 
-
-
-
-
-   
   </details>
 
 
-    
+<details>
+<summary><b>Day 3</b>Design library cell using Magic Layout and ngspice characterization </summary>   
+<br>
+
+ </details>   
 
