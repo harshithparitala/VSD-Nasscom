@@ -702,14 +702,7 @@ After running these commands, the Magic GUI will open with the layout. You can z
 
 Screenshots :-
 
-![Image](https://github.com/user-attachments/assets/7effdb48-6d81-4c61-b261-acee95072f27)
-![Image](https://github.com/user-attachments/assets/c12c79fa-3ac5-42d6-a4fd-7f59027bb80b)
-![Image](https://github.com/user-attachments/assets/cd281d3e-2d54-4e80-8409-ef9c3f7946c6)
-![Image](https://github.com/user-attachments/assets/742982bd-db42-4b97-b286-c8845540f0cc)
-![Image](https://github.com/user-attachments/assets/9bb1fb90-2026-4833-a359-8131d15ee3aa)
-![Image](https://github.com/user-attachments/assets/1923d230-f889-4d5a-bcb6-4b3f589f2900)
-![Image](https://github.com/user-attachments/assets/38500449-681e-4211-aca8-4b66ad4f8166)
-
+![Image](https://github.com/user-attachments/assets/7434b744-b619-4a9c-870a-6b238c800aa9)
 
 
 
