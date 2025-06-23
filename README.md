@@ -704,8 +704,7 @@ Screenshots :-
 
 Floorplan def in magic
 
-![Image](https://github.com/user-attachments/assets/5287fdfc-a5d6-44c0-b315-c9959285cb66)
-
+![Image](https://github.com/user-attachments/assets/db510809-5caf-4c65-a72e-ad96d4679198)
 
 
 Equidistant placement of ports:
@@ -829,7 +828,127 @@ One common thing across all the stages are "GATES or CELLS".
 <summary><b>Lab:</b>library binding and placement </summary>   
 <br>
 
+Task:
+
+-  Run 'picorv32a' design congestion-aware placement using OpenLANE flow and generate necessary outputs.
+-  Load the generated placement DEF in Magic tool and explore the placement.
   
+1.Run 'picorv32a' design congestion-aware placement using OpenLANE flow and generate necessary outputs.
+--
+
+### Understanding the `run_placement` Command in OpenLANE
+
+Once synthesis and floorplanning are complete, the next step in the physical design flow is **placement**, where standard cells are placed onto legal rows within the die area.
+
+---
+
+#### 🔧 Command to Run Placement
+
+```tcl
+run_placement
+```
+
+This command initiates **congestion-aware placement** in OpenLANE. It consists of two key sub-steps:
+
+---
+
+###  1. Global Placement
+
+**Global placement** is the first stage of the placement process.
+
+**Purpose:**
+
+* Places cells in approximate locations to minimize wirelength and congestion.
+* Ignores legal row boundaries (non-overlapping but not legally aligned).
+
+**Tools involved:**
+
+* OpenROAD's `RePlAce` or `gp` engine is used for global placement.
+
+**Key goals:**
+
+* Minimize half-perimeter wirelength (HPWL).
+* Reduce routing congestion.
+* Optimize placement density.
+
+---
+
+###  2. Detailed Placement
+
+**Detailed placement** follows global placement.
+
+**Purpose:**
+
+* Adjusts and finalizes cell locations to legal positions within placement rows.
+* Ensures no overlaps, obeys design rules, and aligns cells with row sites.
+
+**Tools involved:**
+
+* OpenROAD's `dp` engine or `open_dp` tool.
+
+**Key goals:**
+
+* Legalize all cells.
+* Optimize local density and timing.
+* Ensure design-rule correctness.
+
+---
+
+screenshots :
+
+This is how we will get when placemnt is done !
+
+![Image](https://github.com/user-attachments/assets/505fa9d2-b697-4ecf-b0c5-ae08b84a5773)
+
+2.Load the generated placement DEF in Magic tool and explore the placement.
+-
+### Commands to Load Placement DEF in Magic (from a New Terminal)
+
+Use the following steps to load and explore the **placement DEF** file for the `picorv32a` design using Magic.
+
+---
+
+#### 1. Navigate to the Placement Output Directory
+
+```bash
+cd Desktop/work/tools/openlane_working_dir/openlane/designs/picorv32a/runs/21-06_17-40/results/placement/
+```
+
+This directory contains the `picorv32a.placement.def` file generated after running the placement stage.
+
+---
+
+#### 2. Launch Magic with Merged LEF and Placement DEF
+
+```bash
+magic -T /home/vsduser/Desktop/work/tools/openlane_working_dir/pdks/sky130A/libs.tech/magic/sky130A.tech \
+      lef read ../../tmp/merged.lef \
+      def read picorv32a.placement.def &
+```
+
+**Explanation of the command:**
+
+* `-T` specifies the technology file for Magic (Sky130A).
+* `lef read` loads macro and cell definitions from the merged LEF.
+* `def read` loads the placed standard cell layout.
+* The trailing `&` launches Magic in the background.
+
+---
+
+After executing these commands, Magic will open a GUI window displaying the placed standard cells inside the core area. You can zoom, inspect rows, and check for overlaps or alignment issues.
+
+
+
+
+  screenshots :
+
+  Placement def in magic :
+  
+![Image](https://github.com/user-attachments/assets/4d45b2c3-8fad-4799-a645-e0f8f5b77d42)
+
+Standard cells legally placed:
+
+![Image](https://github.com/user-attachments/assets/04b0380a-3166-4ab2-8529-223c084b61ef)
 
 
     
