@@ -582,6 +582,135 @@ Generates the core and die area, sets up placement rows, IO pins, and creates an
 
 ---
 
+Screenshots of floorplan :
+
+![Image](https://github.com/user-attachments/assets/04ca8c56-7cfb-4002-ad4e-140d7286a43f)
+
+![Image](https://github.com/user-attachments/assets/ad8e96e2-4397-4f79-b61d-11ef4abce749)
+
+
+2.Calculate the die area in microns from the values in the generated floorplan DEF file.
+-
+
+### Understanding Die Area Calculation from DEF File
+
+ A DEF (Design Exchange Format) file contains geometric and placement information for a chip layout. One key property we extract from a DEF is the **die area**, which defines the physical dimensions of the integrated circuit (IC).
+
+The DEF file includes a `DIEAREA` statement, specifying the lower-left and upper-right corners of the die in **database units (DBU)**.
+
+---
+
+####  What is a DBU?
+
+* A **Database Unit (DBU)** is the internal unit of measurement used by layout tools.
+* In **Sky130** technology, **1000 DBU = 1 micron**.
+
+This means every coordinate value in the DEF is **1000x larger** than its actual physical size in microns.
+
+---
+
+#### DIEAREA line from DEF
+
+```
+DIEAREA ( 0 0 ) ( 660685 671405 ) ;
+```
+
+This defines:
+
+* Lower-left corner at (0, 0)
+* Upper-right corner at (660685, 671405)
+
+---
+
+###  Step-by-Step Area Calculation
+
+#### 1. Convert Width and Height to Microns
+
+* **Die width (DBU)** = 660685 - 0 = `660685`
+* **Die height (DBU)** = 671405 - 0 = `671405`
+
+Now convert DBU to microns:
+
+```
+Width in microns = 660685 / 1000 = 660.685 µm
+Height in microns = 671405 / 1000 = 671.405 µm
+```
+
+#### 2. Calculate Area in Square Microns
+
+```
+Area = Width × Height
+     = 660.685 × 671.405
+     = 443,587.212425 µm²
+```
+
+---
+
+###  Results
+
+| Parameter   | Value          |
+| ----------- | -------------- |
+| Width (µm)  | 660.685        |
+| Height (µm) | 671.405        |
+| Area (µm²)  | 443,587.212425 |
+
+---
+
+This computed area is essential for estimating silicon cost, planning placement, and evaluating utilization during physical design. Always check the `UNITS` line in the DEF to confirm the DBU-to-micron scale (typically `1000` for Sky130).
+
+screenshots :
+
+![Image](https://github.com/user-attachments/assets/b55481f9-0e21-4a80-850a-ca895fd73bc5)
+
+3.Load the generated floorplan DEF in Magic tool and explore the floorplan layout.
+-
+
+### Commands to Load Floorplan DEF in Magic (from a New Terminal)
+
+Follow these steps to load the generated floorplan DEF of `picorv32a` into the Magic VLSI layout tool:
+
+---
+
+#### 1. Change to the Floorplan Directory
+
+```bash
+cd Desktop/work/tools/openlane_working_dir/openlane/designs/picorv32a/runs/21-06_17-40/results/floorplan/
+```
+
+This path contains the generated `picorv32a.floorplan.def` file after running the floorplanning stage using OpenLANE.
+
+---
+
+#### 2. Launch Magic with Floorplan DEF and Merged LEF
+
+```bash
+magic -T /home/vsduser/Desktop/work/tools/openlane_working_dir/pdks/sky130A/libs.tech/magic/sky130A.tech \
+      lef read ../../tmp/merged.lef \
+      def read picorv32a.floorplan.def &
+```
+
+**Explanation:**
+
+* `-T` specifies the Sky130 technology file for Magic.
+* `lef read` loads the merged LEF file, which contains cell and IO macro definitions.
+* `def read` loads the physical floorplan layout in DEF format.
+* The `&` runs Magic in the background.
+
+---
+
+After running these commands, the Magic GUI will open with the layout. You can zoom, inspect cells, check placement rows, and view pin locations for your design.
+
+Screenshots :-
+
+![Image](https://github.com/user-attachments/assets/7effdb48-6d81-4c61-b261-acee95072f27)
+![Image](https://github.com/user-attachments/assets/c12c79fa-3ac5-42d6-a4fd-7f59027bb80b)
+![Image](https://github.com/user-attachments/assets/cd281d3e-2d54-4e80-8409-ef9c3f7946c6)
+![Image](https://github.com/user-attachments/assets/742982bd-db42-4b97-b286-c8845540f0cc)
+![Image](https://github.com/user-attachments/assets/9bb1fb90-2026-4833-a359-8131d15ee3aa)
+![Image](https://github.com/user-attachments/assets/1923d230-f889-4d5a-bcb6-4b3f589f2900)
+![Image](https://github.com/user-attachments/assets/38500449-681e-4211-aca8-4b66ad4f8166)
+
+
 
 
 
