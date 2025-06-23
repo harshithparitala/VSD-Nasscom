@@ -702,6 +702,13 @@ After running these commands, the Magic GUI will open with the layout. You can z
 
 Screenshots :-
 
+Floorplan def in magic
+![Image](https://github.com/user-attachments/assets/5287fdfc-a5d6-44c0-b315-c9959285cb66)
+
+
+
+Equidistant placement of ports:
+
 ![Image](https://github.com/user-attachments/assets/7434b744-b619-4a9c-870a-6b238c800aa9)
 
 
