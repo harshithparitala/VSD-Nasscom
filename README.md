@@ -703,6 +703,7 @@ After running these commands, the Magic GUI will open with the layout. You can z
 Screenshots :-
 
 Floorplan def in magic
+
 ![Image](https://github.com/user-attachments/assets/5287fdfc-a5d6-44c0-b315-c9959285cb66)
 
 
@@ -711,12 +712,25 @@ Equidistant placement of ports:
 
 ![Image](https://github.com/user-attachments/assets/7434b744-b619-4a9c-870a-6b238c800aa9)
 
+Horizontal ports :
 
+![Image](https://github.com/user-attachments/assets/fa39d32b-8e6c-4c59-9716-952455044b5f)
 
+Vertical cells :
 
+![Image](https://github.com/user-attachments/assets/33922a79-af95-4454-9d9c-f3d1abd53aad)
 
+Decap Cells and Tap Cells :
 
+![Image](https://github.com/user-attachments/assets/1241afc5-fee2-4f25-85cc-4dd82d820fe4)
 
+Diogonally equidistant Tap cells :
+
+![Image](https://github.com/user-attachments/assets/0cd06758-b243-4273-93fa-795171a3061e)
+
+Unplaced standard cells at the origin :
+
+![Image](https://github.com/user-attachments/assets/2f0348f4-8ca2-4b0f-b8d6-b1bd77dac076)
 
 
 
