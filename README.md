@@ -489,6 +489,108 @@ The area between die and core blocks for cell placement and it is reserved for p
 <summary><b>1.Labs:</b> Run FLoorPlan using OpenLane and review files  </summary>   
 <br>
 
+-  Run 'picorv32a' design floorplan using OpenLANE flow and generate necessary outputs.
+-  Calculate the die area in microns from the values in the generated floorplan DEF file.
+-  Load the generated floorplan DEF in Magic tool and explore the floorplan layout.
+
+1.Run 'picorv32a' design floorplan using OpenLANE flow and generate necessary outputs.
+----
+
+
+
+Here it explains the detailed process of running OpenLANE interactively for the `picorv32a` design.
+
+---
+
+#### 1. Change to the OpenLANE working directory
+
+```bash
+cd Desktop/work/tools/openlane_working_dir/openlane
+```
+
+This sets your working directory to where OpenLANE is installed locally on your machine.
+
+---
+
+#### 2. Set up Docker alias (optional)
+
+```bash
+# alias docker='docker run -it -v $(pwd):/openLANE_flow -v $PDK_ROOT:$PDK_ROOT -e PDK_ROOT=$PDK_ROOT -u $(id -u $USER):$(id -g $USER) efabless/openlane:v0.21'
+```
+
+This command aliases the long Docker run command to `docker`, mounting the current OpenLANE folder and your PDK path into the container. You only need to run this once in a terminal session.
+
+---
+
+#### 3. Launch the OpenLANE Docker container
+
+```bash
+docker
+```
+
+After aliasing, just typing `docker` starts the OpenLANE container with proper mounts and environment settings.
+
+---
+
+#### 4. Start OpenLANE in interactive mode
+
+```bash
+./flow.tcl -interactive
+```
+
+This launches OpenLANE’s TCL-based interactive shell, allowing you to control each stage manually.
+
+---
+
+#### 5. Load the OpenLANE package
+
+```tcl
+package require openlane 0.9
+```
+
+Loads the OpenLANE commands and environment into the current shell session. This step is mandatory before running any flow operations.
+
+---
+
+#### 6. Prepare the design workspace
+
+```tcl
+prep -design picorv32a
+```
+
+This sets up the design directory, copies configuration files, and initializes the workspace for `picorv32a`. It's a prerequisite before synthesis.
+
+---
+
+#### 7. Run synthesis
+
+```tcl
+run_synthesis
+```
+
+This performs RTL-to-gate synthesis using Yosys. It converts the Verilog source code into a gate-level netlist and reports cell count, area, and timing.
+
+---
+
+#### 8. Run floorplanning
+
+```tcl
+run_floorplan
+```
+
+Generates the core and die area, sets up placement rows, IO pins, and creates an initial layout bounding box. This prepares the design for placement.
+
+---
+
+
+
+
+
+
+
+
+
+
 </details>
 </details>
 
