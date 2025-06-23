@@ -823,11 +823,17 @@ One common thing across all the stages are "GATES or CELLS".
 
 
     
-  </details>  
+  </details> 
+  
   <details>
 <summary><b>Lab:</b>library binding and placement </summary>   
 <br>
-    </details>
+
+  
+
+
+    
+  </details>
   </details>
 
   <details>
