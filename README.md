@@ -1363,6 +1363,175 @@ Where:
 
 
 
+Rise time calculations :
+-
+
+
+The **rise transition time** (also called **rise time**, **tr**)
+measures how long an output signal takes to move from 20 % to 80 % of its final value.
+
+---
+
+#### Formula
+
+```
+Rise transition time (tr) = T(80 %) − T(20 %)
+```
+
+* **T(20 %)** – the timestamp when the output first crosses 20 % of V<sub>DD</sub>.
+* **T(80 %)** – the timestamp when the output first crosses 80 % of V<sub>DD</sub>.
+
+For a 3.3 V supply:
+
+* 20 % × 3.3 V = **0.660 V**
+* 80 % × 3.3 V = **2.640 V**
+
+---
+
+#### Example Measurement
+
+| Parameter | Value          |
+| --------- | -------------- |
+| T(20 %)   | **2.18242 ns** |
+| T(80 %)   | **2.24638 ns** |
+
+```
+tr = 2.24638 ns − 2.18242 ns = 0.06396 ns = 63.96 ps
+```
+
+So the **rise transition time** for this inverter output is **≈ 64 ps**.
+
+screenshots :-
+
+
+20% :
+
+
+
+80% :
+
+
+2.Fall Transition Time Calculation
+-
+
+The **fall transition time** (also called **fall time**, **tf**) measures how long an output signal takes to fall from 80% to 20% of its final value.
+
+---
+
+#### Formula
+
+```
+Fall transition time (tf) = T(20%) − T(80%)
+```
+
+* **T(80%)** – the timestamp when the output starts falling below 80% of V<sub>DD</sub>.
+* **T(20%)** – the timestamp when the output crosses below 20% of V<sub>DD</sub>.
+
+For a 3.3 V supply:
+
+* 20% × 3.3 V = **0.660 V**
+* 80% × 3.3 V = **2.640 V**
+
+---
+
+#### Example Measurement (Fall)
+
+| Parameter | Value         |
+| --------- | ------------- |
+| T(80%)    | **4.0536 ns** |
+| T(20%)    | **4.0955 ns** |
+
+```
+tf = 4.0955 ns − 4.0536 ns = 0.0419 ns = 41.9 ps
+```
+
+So the **fall transition time** for this inverter output is **≈ 41.9 ps**.
+
+screenshots :
+
+20% :
+
+
+80% :
+
+
+3.Rise Cell Delay Calculation
+-
+
+The **rise cell delay** (also called **propagation delay high**, **tp<sub>LH</sub>**) measures the time from the input’s falling transition (50 % level) to the output’s rising transition (50 % level).
+
+---
+
+#### Formula
+
+```
+Rise cell delay (tpLH) = T_output(50 % rising) − T_input(50 % falling)
+```
+
+* **T\_input(50 % falling)** – timestamp when the input signal falls through 50 % of V<sub>DD</sub>.
+* **T\_output(50 % rising)** – timestamp when the output signal rises through 50 % of V<sub>DD</sub>.
+
+For a **3.3 V** supply, **50 % × 3.3 V = 1.65 V**.
+
+---
+
+#### Example Measurement
+
+| Parameter               | Value          |
+| ----------------------- | -------------- |
+| T\_input (50 % falling) | **2.15008 ns** |
+| T\_output (50 % rising) | **2.21144 ns** |
+
+```
+tpLH = 2.21144 ns − 2.15008 ns = 0.06136 ns = 61.36 ps
+```
+
+So the **rise cell delay** for this inverter is **≈ 61.4 ps**.
+
+screenshots :
+
+50%:
+
+
+4.Fall Cell Delay Calculation
+-
+
+The **fall cell delay** (also called **propagation delay low**, **tp<sub>HL</sub>**) measures the time from the input’s rising transition (50 % level) to the output’s falling transition (50 % level).
+
+---
+
+#### Formula
+
+```
+Fall cell delay (tpHL) = T_output(50 % falling) − T_input(50 % rising)
+```
+
+* **T\_input (50 % rising)** – timestamp when the input signal rises through 50 % of V<sub>DD</sub>.
+* **T\_output (50 % falling)** – timestamp when the output signal falls through 50 % of V<sub>DD</sub>.
+
+For a **3.3 V** supply, **50 % × 3.3 V = 1.65 V**.
+
+---
+
+#### Example Measurement
+
+| Parameter                | Value       |
+| ------------------------ | ----------- |
+| T\_input (50 % rising)   | **4.05 ns** |
+| T\_output (50 % falling) | **4.07 ns** |
+
+```
+tpHL = 4.07 ns − 4.05 ns = 0.02 ns = 20 ps
+```
+
+So the **fall cell delay** for this inverter is **≈ 20 ps**.
+
+screenshots:
+
+50%:
+
+
+
 
 
 
