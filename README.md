@@ -1222,26 +1222,26 @@ Git cloning :
 --
 
 screenshots of the inverter in magic :-
-1.inverter
+ 1.inverter
 
 ![Image](https://github.com/user-attachments/assets/c8c41cdf-4ae1-4c14-aa08-fc73f8b0be88)
 
-2. nmos
+ 2. nmos
 
 ![Image](https://github.com/user-attachments/assets/97c0517e-e6c9-411c-bf3f-1c1d727c1322)
 
-3. nwell
+ 3. nwell
 
 ![Image](https://github.com/user-attachments/assets/7d75ca6f-b943-473c-bdbd-35ab4868ed73)
 
-4.pmos
+ 4.pmos
 
 ![Image](https://github.com/user-attachments/assets/046fbfac-7866-4153-8d4e-f417a73b5f19)
 
-5.poly
+ 5.poly
 ![Image](https://github.com/user-attachments/assets/315e79c6-12c9-4a51-8aa7-b69a410b2806)
 
-6.Topmost cell
+ 6.Topmost cell
 ![Image](https://github.com/user-attachments/assets/e8b97eae-0463-4a7b-a009-dc0aea32a4ca)
 
   </details>  
@@ -1304,10 +1304,11 @@ ext2spice
 
 screenshots of tkcon window :
 
+![Image](https://github.com/user-attachments/assets/9562842e-f5e0-4343-8260-45587c571728)
 
 screenshot of the spice file :
 
-
+![Image](https://github.com/user-attachments/assets/ba70066a-0305-4f60-aa89-81f05a6cb8b0)
 
  </details>   
 
@@ -1324,11 +1325,47 @@ Tasks :
 1.Editing the SPICE model file for analysis through simulation.
 --
 
+Measuring unit distance in layout grid 
+
+![Image](https://github.com/user-attachments/assets/d67aba33-8abb-4eef-a82c-c67ea5433623)
+
+Final edited spice file for ngspice simulation :
+
+![Image](https://github.com/user-attachments/assets/0eac6a1a-85b2-418f-b68f-12f47561a070)
 
 
 
 2.Performing post-layout ngspice simulations.
 --
+
+commands to run ngspice :
+
+#### 1. Perform Post-Layout SPICE Simulation with ngspice
+
+```bash
+ngspice sky130_inv.spice
+```
+
+This command launches the ngspice terminal and loads the specified SPICE file for simulation.
+
+Inside the ngspice prompt, use the following to plot signals:
+
+```bash
+plot y vs time a
+```
+
+Where:
+
+* `y` is the output signal node (e.g., V(out)).
+* `a` represents time or an input node.
+
+![Image](https://github.com/user-attachments/assets/f757edd9-7cad-4fa1-8f20-19029275a56b)
+
+
+
+
+
+
 
 3.Identifying and fixing issues in the DRC section of the old Magic tech file for the SkyWater process
 -
