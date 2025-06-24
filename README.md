@@ -1362,6 +1362,9 @@ Where:
 ![Image](https://github.com/user-attachments/assets/f757edd9-7cad-4fa1-8f20-19029275a56b)
 
 
+output :
+
+![Image](https://github.com/user-attachments/assets/60dc3a09-be0f-4c04-8814-ed6c59197fde)
 
 Rise time calculations :
 -
@@ -1406,10 +1409,15 @@ screenshots :-
 
 20% :
 
+![Image](https://github.com/user-attachments/assets/91a38934-ee3b-452e-bc78-55990cf16b0d)
+
+![Image](https://github.com/user-attachments/assets/3286494f-078e-497f-a924-f2fb697ad720)
 
 
 80% :
+![Image](https://github.com/user-attachments/assets/76f0ed03-acaa-4419-bf3d-794007806b19)
 
+![Image](https://github.com/user-attachments/assets/7e28ba8a-3198-442b-9bd9-16f7db818baa)
 
 2.Fall Transition Time Calculation
 -
@@ -1451,9 +1459,15 @@ screenshots :
 
 20% :
 
+![Image](https://github.com/user-attachments/assets/e2d0963f-f7cc-431a-ad4f-c5594de0d132)
+
+![Image](https://github.com/user-attachments/assets/130e582b-1a98-46b0-b515-caf88f424bd8)
 
 80% :
 
+![Image](https://github.com/user-attachments/assets/9da807a0-bb6c-4777-81e5-aebc21fc9376)
+
+![Image](https://github.com/user-attachments/assets/4bad5084-5af9-438d-a6fc-2fe877b7d01b)
 
 3.Rise Cell Delay Calculation
 -
@@ -1492,6 +1506,9 @@ screenshots :
 
 50%:
 
+![Image](https://github.com/user-attachments/assets/26be035b-c910-496f-ab24-17d980b4cbc6)
+
+![Image](https://github.com/user-attachments/assets/4fcab278-073c-4a5b-9602-6023701f1578)
 
 4.Fall Cell Delay Calculation
 -
@@ -1530,8 +1547,9 @@ screenshots:
 
 50%:
 
+![Image](https://github.com/user-attachments/assets/fb83f9f0-430d-4b9e-a8fe-08acc8376a97)
 
-
+![Image](https://github.com/user-attachments/assets/cb3d4482-0c57-4a03-b698-b7523b8fdc32)
 
 
 
@@ -1623,14 +1641,33 @@ magic -d XR &
 Starts Magic with improved graphics using the XRender backend, useful for more responsive DRC rule debugging and layout inspection.
 
 ---
+screenshots of these commands running :
 
+![Image](https://github.com/user-attachments/assets/9e4c127c-91c7-4a94-8ba2-bddddb352756)
 
+screenshot of poly rules :
 
+![Image](https://github.com/user-attachments/assets/e8227f69-c51b-4f8c-9efa-6d30fb594446)
 
+1.incorrectly implemented poly.9 rule , no drc violation even though spacing <0.48u
 
+![Image](https://github.com/user-attachments/assets/020d7fbd-f897-441b-ab46-c1d3e2024269)
 
+![Image](https://github.com/user-attachments/assets/d0f71314-45eb-4e09-920c-0809e777a1c4)
 
+![Image](https://github.com/user-attachments/assets/ed91003a-bfab-4561-bc1a-fdee181614f5)
 
+2.incorrectly implemented of poly.2
+
+![Image](https://github.com/user-attachments/assets/14e3adbb-ed15-426d-af0f-a86cb9fa3338)
+
+3.incorrectly implemented nwell.4 rule no drc violation even though no tap present in nwell
+
+![Image](https://github.com/user-attachments/assets/07c14319-72a5-43b9-acc8-2e1ac660f9fc)  
+
+![Image](https://github.com/user-attachments/assets/f0a80fc1-b805-4d95-bf67-1102c5a38ae7)
+
+![Image](https://github.com/user-attachments/assets/084b3c1a-1c36-4a8d-8b31-6365e0696615)
 
  
 </details>   
