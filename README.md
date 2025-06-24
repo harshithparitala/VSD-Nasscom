@@ -1116,6 +1116,116 @@ Transition time:
 <details>
 <summary><b>Day 3:</b> Design library cell using Magic Layout and ngspice characterization </summary>   
 <br>
+ 
+ <details>
+<summary><b>Topic 1:</b> Labs for CMOS inverter ngspice simulations  </summary>   
+<br>
+ Task :
 
+-Clone custom inverter standard cell design from github repository: Standard cell design and characterization using OpenLANE flow.
+-Load the custom inverter layout in magic and explore.
+
+1.Clone custom inverter standard cell design from github repository: Standard cell design and characterization using OpenLANE flow
+-
+
+### Steps to View Custom Inverter Layout in Magic (sky130)
+
+This guide walks through loading a custom standard cell layout, specifically an **inverter**, using Magic with the Sky130 technology. These steps are often used in custom cell design and verification workflows.
+
+---
+
+#### 1. Change to the OpenLANE Working Directory
+
+```bash
+cd Desktop/work/tools/openlane_working_dir/openlane
+```
+
+This is your base directory where tools and design flows (like OpenLANE) are set up.
+
+---
+
+#### 2. Clone the Standard Cell Design Repository
+
+```bash
+git clone https://github.com/nickson-jose/vsdstdcelldesign
+```
+
+Clones a GitHub repo that contains layout files (e.g., `.mag` files) for custom-designed standard cells including the inverter.
+
+---
+
+#### 3. Navigate to the Cloned Repository
+
+```bash
+cd vsdstdcelldesign
+```
+
+Moves into the newly cloned project directory containing the layout files.
+
+---
+
+#### 4. Copy the Magic Tech File
+
+```bash
+cp /home/vsduser/Desktop/work/tools/openlane_working_dir/pdks/sky130A/libs.tech/magic/sky130A.tech .
+```
+
+This command copies the Sky130 Magic technology file into the current directory for convenience. It's needed to view the layout correctly in Magic.
+
+---
+
+#### 5. Check for Required Layout Files
+
+```bash
+ls
+```
+
+List the directory contents to confirm that layout files (like `sky130_inv.mag`) and the copied tech file are present.
+
+Expected output includes:
+
+* `sky130_inv.mag`
+* `sky130A.tech`
+* Possibly `.spice`, `.lef`, or `.gds` files if included in the repo.
+
+---
+
+#### 6. Open the Layout in Magic
+
+```bash
+magic -T sky130A.tech sky130_inv.mag &
+```
+
+This launches Magic using the specified Sky130 technology file and loads the custom inverter layout (`sky130_inv.mag`).
+
+**In the Magic GUI**, you can:
+
+* Zoom and pan across the layout
+* Inspect each layer (poly, diffusion, metal, contacts)
+* Check for DRC (Design Rule Check) violations
+
+---
+
+Screenshots of these running :
+
+
+
+
+
+
+
+2.Load the custom inverter layout in magic and explore.
+--
+
+screenshots of the inverter in magic :-
+
+
+
+  </details>  
+
+  
  </details>   
+
+
+ 
 
