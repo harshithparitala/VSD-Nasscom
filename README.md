@@ -1657,9 +1657,83 @@ screenshot of poly rules :
 
 ![Image](https://github.com/user-attachments/assets/ed91003a-bfab-4561-bc1a-fdee181614f5)
 
+
+### DRC Check with Updated Tech File in Magic
+
+Use the following commands in the Magic layout tool after editing or correcting the technology file (e.g., `sky130A.tech`) to reload the settings and re-evaluate DRC errors.
+
+---
+
+#### 1. Load the Updated Tech File
+
+```tcl
+tech load sky130A.tech
+```
+
+This command reloads the modified technology file so that new DRC rules or fixes take effect.
+
+---
+
+#### 2. Run DRC Check
+
+```tcl
+drc check
+```
+
+This re-executes the design rule checking based on the loaded technology file. Any rule violations are reported in the layout window.
+
+---
+
+#### 3. View DRC Error Details
+
+```tcl
+drc why
+```
+
+Select a region in the layout where DRC errors are marked, then run this command to display textual descriptions of the rule violations.
+
+---
+
 2.incorrectly implemented of poly.2
 
 ![Image](https://github.com/user-attachments/assets/14e3adbb-ed15-426d-af0f-a86cb9fa3338)
+
+### DRC Check with Updated Tech File in Magic
+
+Use the following commands in the Magic layout tool after editing or correcting the technology file (e.g., `sky130A.tech`) to reload the settings and re-evaluate DRC errors.
+
+---
+
+#### 1. Load the Updated Tech File
+
+```tcl
+tech load sky130A.tech
+```
+
+This command reloads the modified technology file so that new DRC rules or fixes take effect.
+
+---
+
+#### 2. Run DRC Check
+
+```tcl
+drc check
+```
+
+This re-executes the design rule checking based on the loaded technology file. Any rule violations are reported in the layout window.
+
+---
+
+#### 3. View DRC Error Details
+
+```tcl
+drc why
+```
+
+Select a region in the layout where DRC errors are marked, then run this command to display textual descriptions of the rule violations.
+
+---
+
 
 3.incorrectly implemented nwell.4 rule no drc violation even though no tap present in nwell
 
@@ -1669,14 +1743,55 @@ screenshot of poly rules :
 
 ![Image](https://github.com/user-attachments/assets/084b3c1a-1c36-4a8d-8b31-6365e0696615)
 
+
+### DRC Check with Updated Tech File in Magic
+
+After modifying the Sky130 technology file (`sky130A.tech`), reload it and run a full DRC pass to verify the fixes.
+
+---
+
+#### 1. Load the Updated Tech File
+
+```tcl
+tech load sky130A.tech
+```
+
+Reloads the edited technology file so the new rule definitions are active.
+
+---
+
+#### 2. Enable Full DRC Rule Set
+
+```tcl
+drc style drc(full)
+```
+
+Switches Magic to the **full DRC** style, ensuring that **all** design rules (including normally off or advisory checks) are evaluated.
+
+---
+
+#### 3. Run DRC Check
+
+```tcl
+drc check
+```
+
+Executes DRC with the full rule set, marking any violations on the layout.
+
+---
+
+#### 4. Inspect Specific Errors
+
+```tcl
+drc why
+```
+
+After clicking a highlighted error region, this command prints the rule description and coordinates, helping you understand the violation.
  
 </details>   
 
  
 </details>  
-
-
-
 <details>
 <summary><b>Day 4:</b> Pre-layout timing analysis and importance of good clock tree </summary>   
 <br>
