@@ -1208,8 +1208,11 @@ This launches Magic using the specified Sky130 technology file and loads the cus
 
 Screenshots of these running :
 
-![Image](https://github.com/user-attachments/assets/95e739fe-a66d-4863-ab94-b9934a0d064c)
+Git cloning :
+
 ![Image](https://github.com/user-attachments/assets/a73936a6-df2b-459a-877e-779361e7cb7b)
+
+![Image](https://github.com/user-attachments/assets/95e739fe-a66d-4863-ab94-b9934a0d064c)
 
 
 
@@ -1220,7 +1223,13 @@ Screenshots of these running :
 
 screenshots of the inverter in magic :-
 
+![Image](https://github.com/user-attachments/assets/c8c41cdf-4ae1-4c14-aa08-fc73f8b0be88)
 
+![Image](https://github.com/user-attachments/assets/97c0517e-e6c9-411c-bf3f-1c1d727c1322)
+![Image](https://github.com/user-attachments/assets/7d75ca6f-b943-473c-bdbd-35ab4868ed73)
+![Image](https://github.com/user-attachments/assets/046fbfac-7866-4153-8d4e-f417a73b5f19)
+![Image](https://github.com/user-attachments/assets/315e79c6-12c9-4a51-8aa7-b69a410b2806)
+![Image](https://github.com/user-attachments/assets/e8b97eae-0463-4a7b-a009-dc0aea32a4ca)
 
   </details>  
 
