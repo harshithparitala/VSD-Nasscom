@@ -1222,13 +1222,26 @@ Git cloning :
 --
 
 screenshots of the inverter in magic :-
+1.inverter
 
 ![Image](https://github.com/user-attachments/assets/c8c41cdf-4ae1-4c14-aa08-fc73f8b0be88)
 
+2. nmos
+
 ![Image](https://github.com/user-attachments/assets/97c0517e-e6c9-411c-bf3f-1c1d727c1322)
+
+3. nwell
+
 ![Image](https://github.com/user-attachments/assets/7d75ca6f-b943-473c-bdbd-35ab4868ed73)
+
+4.pmos
+
 ![Image](https://github.com/user-attachments/assets/046fbfac-7866-4153-8d4e-f417a73b5f19)
+
+5.poly
 ![Image](https://github.com/user-attachments/assets/315e79c6-12c9-4a51-8aa7-b69a410b2806)
+
+6.Topmost cell
 ![Image](https://github.com/user-attachments/assets/e8b97eae-0463-4a7b-a009-dc0aea32a4ca)
 
   </details>  
