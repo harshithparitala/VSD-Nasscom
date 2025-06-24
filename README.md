@@ -1208,7 +1208,8 @@ This launches Magic using the specified Sky130 technology file and loads the cus
 
 Screenshots of these running :
 
-
+![Image](https://github.com/user-attachments/assets/95e739fe-a66d-4863-ab94-b9934a0d064c)
+![Image](https://github.com/user-attachments/assets/a73936a6-df2b-459a-877e-779361e7cb7b)
 
 
 
