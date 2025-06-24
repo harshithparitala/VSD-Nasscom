@@ -1279,18 +1279,39 @@ ext2spice
 
 ---
 
-screenshots of tkon window :
+screenshots of tkcon window :
+
+
+screenshot of the spice file :
 
 
 
-
-
-  
-
-  
  </details>   
+
+
+<details>
+<summary><b>Topic 3:</b> sky130 Tech file Labs  </summary>   
+<br>
+
+Tasks :
+-  Editing the SPICE model file for analysis through simulation.
+-  Performing post-layout ngspice simulations.
+-  Identifying and fixing issues in the DRC section of the old Magic tech file for the SkyWater process.
+
+1.Editing the SPICE model file for analysis through simulation.
+--
+
+
+
+
+2.Performing post-layout ngspice simulations.
+--
+
+
+ 
 </details>   
 
-
+ 
+</details>  
  
 
