@@ -1307,6 +1307,9 @@ Tasks :
 2.Performing post-layout ngspice simulations.
 --
 
+3.Identifying and fixing issues in the DRC section of the old Magic tech file for the SkyWater process
+-
+
 
  
 </details>   
