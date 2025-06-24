@@ -1122,8 +1122,8 @@ Transition time:
 <br>
  Task :
 
--Clone custom inverter standard cell design from github repository: Standard cell design and characterization using OpenLANE flow.
--Load the custom inverter layout in magic and explore.
+- Clone custom inverter standard cell design from github repository: Standard cell design and characterization using OpenLANE flow.
+- Load the custom inverter layout in magic and explore.
 
 1.Clone custom inverter standard cell design from github repository: Standard cell design and characterization using OpenLANE flow
 -
