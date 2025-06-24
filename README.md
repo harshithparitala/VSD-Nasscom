@@ -1223,8 +1223,73 @@ screenshots of the inverter in magic :-
 
   </details>  
 
+ <details>
+<summary><b>Topic 2:</b> Spice extraction of inverter in magic.  </summary>   
+<br>
+Task :
+   
+- Spice extraction of inverter in magic.
+
+ ### Commands for SPICE Extraction of Custom Inverter Layout in Magic (via tkcon)
+
+To perform SPICE extraction of a custom layout (inverter) using Magic, the following commands are executed in the **tkcon window** of the Magic GUI after loading the layout.
+
+---
+
+#### 1. Confirm Current Directory
+
+```tcl
+pwd
+```
+
+Prints the current working directory to ensure Magic is operating in the folder where the layout (`.mag`) file resides. This is also where the `.ext` and `.spice` files will be saved.
+
+---
+
+#### 2. Extract Layout into .ext Format
+
+```tcl
+extract all
+```
+
+* Extracts device and connectivity information from the loaded layout.
+* Generates a `.ext` file (Magic's internal format for circuit extraction).
+
+---
+
+#### 3. Enable Parasitic Resistance and Capacitance Extraction
+
+```tcl
+ext2spice cthresh 0 rthresh 0
+```
+
+* `cthresh 0` enables **all capacitances**, including parasitics.
+* `rthresh 0` enables **all resistances**, allowing RC-aware simulation.
+
+---
+
+#### 4. Generate SPICE Netlist
+
+```tcl
+ext2spice
+```
+
+* Converts the extracted `.ext` file into a `.spice` netlist.
+* Output is usually saved as `sky130_inv.spice` (or based on the `.mag` file name).
+
+---
+
+screenshots of tkon window :
+
+
+
+
+
+  
+
   
  </details>   
+</details>   
 
 
  
