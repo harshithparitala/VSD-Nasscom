@@ -1311,6 +1311,96 @@ Tasks :
 -
 
 
+### DRC Debugging and Correction for Sky130 Magic Tech File
+
+This guide walks you through downloading, extracting, and inspecting a corrupted SkyWater process DRC test setup in Magic for the purpose of fixing design rule violations.
+
+---
+
+####  Sky130 Periphery Rules Documentation
+
+To understand the design rules that may require fixing:
+
+* [Sky130 Periphery Rules](https://skywater-pdk.readthedocs.io/en/main/rules/periphery.html)
+
+---
+
+#### 1. Change to Home Directory
+
+```bash
+cd
+```
+
+Switch to the home directory to begin work in a clean and known location.
+
+---
+
+#### 2. Download DRC Lab Files
+
+```bash
+wget http://opencircuitdesign.com/open_pdks/archive/drc_tests.tgz
+```
+
+Downloads a tarball archive containing test designs and configuration files for exploring and debugging DRC issues in the SkyWater process tech.
+
+---
+
+#### 3. Extract the Downloaded Archive
+
+```bash
+tar xfz drc_tests.tgz
+```
+
+Extracts the compressed `.tgz` file into a folder named `drc_tests` with all associated files.
+
+---
+
+#### 4. Navigate into the Extracted Folder
+
+```bash
+cd drc_tests
+```
+
+This is the working directory containing layout files, `.magicrc`, and potentially broken or outdated tech file references.
+
+---
+
+#### 5. List All Files in the Directory
+
+```bash
+ls -al
+```
+
+Verifies that expected files like layout (`*.mag`), config files (`.magicrc`), and perhaps a local copy of `sky130A.tech` are present.
+
+---
+
+#### 6. Open and Inspect the .magicrc File
+
+```bash
+gvim .magicrc
+```
+
+Opens the Magic configuration file in GVim to review tech file paths, layer settings, and rule load commands. You can update the `.magicrc` to use a corrected or updated version of `sky130A.tech` here.
+
+---
+
+#### 7. Launch Magic with X Rendering Backend
+
+```bash
+magic -d XR &
+```
+
+Starts Magic with improved graphics using the XRender backend, useful for more responsive DRC rule debugging and layout inspection.
+
+---
+
+
+
+
+
+
+
 
 
  
