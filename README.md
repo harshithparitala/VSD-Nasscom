@@ -1408,5 +1408,11 @@ Starts Magic with improved graphics using the XRender backend, useful for more r
 
  
 </details>  
- 
 
+
+
+<details>
+<summary><b>Day 4:</b> Pre-layout timing analysis and importance of good clock tree </summary>   
+<br>
+
+</details>  
