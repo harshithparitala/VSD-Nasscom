@@ -1797,3 +1797,14 @@ After clicking a highlighted error region, this command prints the rule descript
 <br>
 
 </details>  
+
+
+
+
+<details>
+<summary><b>Day 4:</b> Pre-layout timing analysis and importance of good clock tree </summary>   
+<br>
+
+</details>  
+
+
