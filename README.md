@@ -1802,8 +1802,431 @@ After clicking a highlighted error region, this command prints the rule descript
 
 
 <details>
-<summary><b>Day 4:</b> Pre-layout timing analysis and importance of good clock tree </summary>   
+<summary><b>Day 5:</b> Final steps for RTL2GDS using tritonRoute and openSTA </summary>   
 <br>
+
+Tasks:
+-
+1. Perform generation of Power Distribution Network (PDN) and explore the PDN layout.
+2. Perfrom detailed routing using TritonRoute.
+3. Post-Route parasitic extraction using SPEF extractor.
+4. Post-Route OpenSTA timing analysis with the extracted parasitics of the route.
+
+
+1.Perform generation of Power Distribution Network (PDN) and explore the PDN layout.
+-
+
+#### 1. **Change Directory to OpenLANE Flow**
+
+```bash
+cd Desktop/work/tools/openlane_working_dir/openlane
+```
+
+Navigate to the directory where the OpenLANE flow is installed.
+
+---
+
+#### 2. **Start Docker Environment**
+
+```bash
+# Alias to simplify Docker execution
+alias docker='docker run -it -v $(pwd):/openLANE_flow -v $PDK_ROOT:$PDK_ROOT -e PDK_ROOT=$PDK_ROOT -u $(id -u $USER):$(id -g $USER) efabless/openlane:v0.21'
+
+# Start OpenLANE Docker container
+docker
+```
+
+This mounts the current working directory and PDK path into the Docker container and launches an interactive session.
+
+---
+
+#### 3. **Start OpenLANE in Interactive Mode**
+
+```tcl
+./flow.tcl -interactive
+```
+
+Launch the OpenLANE flow in interactive mode so individual flow steps can be run manually.
+
+---
+
+#### 4. **Initialize OpenLANE Tcl Package**
+
+```tcl
+package require openlane 0.9
+```
+
+Load the OpenLANE Tcl package required for running design commands.
+
+---
+
+#### 5. **Prep the Design**
+
+```tcl
+prep -design picorv32a
+```
+
+Prepare the flow for the `picorv32a` design. This sets up directories and loads config files.
+
+---
+
+#### 6. **Add Custom LEF Files (If Any)**
+
+```tcl
+set lefs [glob $::env(DESIGN_DIR)/src/*.lef]
+add_lefs -src $lefs
+```
+
+If there are additional LEF files added to the design source directory, include them in the merged LEF used by OpenLANE.
+
+---
+
+#### 7. **Adjust Synthesis Strategy and Sizing**
+
+```tcl
+set ::env(SYNTH_STRATEGY) "DELAY 3"
+set ::env(SYNTH_SIZING) 1
+```
+
+Customize synthesis behavior by choosing a delay-based optimization strategy and enabling synthesis-time gate sizing.
+
+---
+
+#### 8. **Run Synthesis**
+
+```tcl
+run_synthesis
+```
+
+Run RTL to gate-level synthesis.
+
+---
+
+#### 9. **Floorplan Initialization (Included in run\_floorplan)**
+
+```tcl
+init_floorplan
+place_io
+tap_decap_or
+```
+
+These commands are automatically run by `run_floorplan`. If executed manually, they initialize floorplan, place IO cells, and insert tap/decap cells.
+
+---
+
+#### 10. **Run Placement**
+
+```tcl
+run_placement
+```
+
+Execute standard cell placement based on the floorplan.
+
+---
+
+#### 11. **Fix CTS Library Issue (If Any)**
+
+```tcl
+unset ::env(LIB_CTS)
+```
+
+Unset the CTS library if it causes any errors during the clock tree synthesis step.
+
+---
+
+#### 12. **Run Clock Tree Synthesis (CTS)**
+
+```tcl
+run_cts
+```
+
+Generate and insert clock buffers to drive the clock network.
+
+---
+
+#### 13. **Generate Power Distribution Network (PDN)**
+
+```tcl
+gen_pdn
+```
+
+Automatically generate the power grid and power straps based on the design floorplan.
+
+---
+#### View PDN DEF in Magic VLSI Tool
+
+```bash
+# Change directory to path containing generated PDN def
+cd Desktop/work/tools/openlane_working_dir/openlane/designs/picorv32a/runs/26-06_13-54/tmp/floorplan/
+
+# Command to load the PDN def in Magic tool
+magic -T /home/vsduser/Desktop/work/tools/openlane_working_dir/pdks/sky130A/libs.tech/magic/sky130A.tech lef read ../../tmp/merged.lef def read 14-pdn.def &
+```
+
+**Explanation**:
+
+* `cd` navigates to the directory containing the `14-pdn.def` file, which includes the generated PDN layout.
+* `magic -T` starts the Magic VLSI layout editor using the Sky130 technology file.
+* `lef read` loads the merged LEF to provide cell and layer information.
+* `def read` loads the PDN DEF file.
+* `&` runs the Magic GUI in the background, keeping the terminal available for other tasks.
+
+This allows you to visualize the layout of the power distribution network (PDN) using the Magic VLSI tool.
+
+
+
+
+
+
+screenshots:
+--
+
+
+
+
+
+2.Perfrom detailed routing using TritonRoute and explore the routed layout.
+--
+
+#### Detailed Routing with TritonRoute
+
+Below is an explanation of the three Tcl commands used during the routing stage in OpenLANE.
+
+```tcl
+# Check value of 'CURRENT_DEF'
+echo $::env(CURRENT_DEF)
+```
+
+**What it does**: Prints the current DEF (Design Exchange Format) file path stored in the `CURRENT_DEF` environment variable.
+**Why it matters**: `CURRENT_DEF` should point to the latest placement or routing DEF that TritonRoute will use as its starting point. Verifying it avoids unintentionally routing an outdated layout.
+
+---
+
+```tcl
+# Check value of 'ROUTING_STRATEGY'
+echo $::env(ROUTING_STRATEGY)
+```
+
+**What it does**: Outputs the routing strategy number configured for TritonRoute.
+**Why it matters**: OpenLANE supports multiple predefined routing strategies (0, 1, 2 …). The strategy influences layer preferences, cost parameters, and congestion handling. Echoing the value confirms which strategy is active before invoking the router.
+
+| Strategy | Typical Use‑Case       | Notes                                    |
+| -------- | ---------------------- | ---------------------------------------- |
+| 0        | Balanced default       | Good first try for most designs          |
+| 1        | Congestion‑heavy cores | Prioritizes detours to relieve hot spots |
+| 2        | Timing‑critical        | Optimizes wirelength on top layers       |
+
+---
+
+```tcl
+# Command for detailed route using TritonRoute
+run_routing
+```
+
+**What it does**: Launches TritonRoute—the detailed router in OpenLANE—to convert the global‑route guides into legal, DRC‑clean metal connections.
+
+**Key steps performed internally**:
+
+1. **Import global routing guides** produced by FastRoute.
+2. **Iterative maze routing** to create wires that honor design rules.
+3. **DRC fixing passes** to resolve shorts, spacing, and antenna violations.
+4. **Parasitic extraction** (optional) producing a final SPEF if enabled.
+5. **Writes out** the completed routed DEF (`*-routed.def`) and an updated `CURRENT_DEF` path.
+
+> **Tip:** If the run fails with DRC violations, try adjusting `ROUTING_STRATEGY`, `MAX_LAYER`, or congestion parameters in `config.tcl`, then rerun `run_routing`.
+
+screenshots of running this:
+--
+
+
+
+
+
+
+#### View Routed DEF in Magic VLSI Tool
+
+```bash
+# Change directory to path containing routed DEF
+cd Desktop/work/tools/openlane_working_dir/openlane/designs/picorv32a/runs/26-06_13-54/results/routing/
+
+# Command to load the routed DEF in Magic tool
+magic -T /home/vsduser/Desktop/work/tools/openlane_working_dir/pdks/sky130A/libs.tech/magic/sky130A.tech lef read ../../tmp/merged.lef def read picorv32a.def &
+```
+
+**Explanation**:
+
+* `cd` changes into the routing output directory for the specific run (`26-06_13-54`) of the `picorv32a` design.
+* `magic -T` launches the Magic layout tool using the Sky130 technology file that defines physical layers and design rules.
+* `lef read` loads the merged LEF file containing cell abstracts and macro information.
+* `def read` loads the fully routed DEF (`picorv32a.def`), which includes routing traces, vias, and placements.
+* `&` runs Magic in the background so the terminal remains available.
+
+This lets you visualize the final routed layout including detailed metal traces created by TritonRoute.
+
+Screenshots of routed def :
+-
+
+
+
+
+3.Post-Route parasitic extraction using SPEF extractor.
+--
+
+#### Extract SPEF File from Routed DEF
+
+```bash
+# Change directory to SPEF extractor tool
+cd Desktop/work/tools/SPEF_EXTRACTOR
+
+# Run the SPEF extractor script with LEF and routed DEF inputs
+python3 main.py /home/vsduser/Desktop/work/tools/openlane_working_dir/openlane/designs/picorv32a/runs/26-06_13-54/tmp/merged.lef /home/vsduser/Desktop/work/tools/openlane_working_dir/openlane/designs/picorv32a/runs/26-06_13-54/results/routing/picorv32a.def
+```
+
+**Explanation**:
+
+* `cd`: Moves to the directory containing the custom Python script for extracting Standard Parasitic Exchange Format (SPEF) data.
+* `python3 main.py`: Runs the SPEF extractor.
+* The first argument is the path to the merged LEF file.
+* The second argument is the path to the routed DEF file.
+
+The tool will parse these inputs and generate a `.spef` file that contains estimated parasitic capacitance and resistance values, which are crucial for post-routing timing analysis.
+
+
+4.Post-Route OpenSTA timing analysis with the extracted parasitics of the route.
+-
+
+#### Timing Analysis using OpenROAD (Post-Routing with SPEF)
+
+```tcl
+# Command to run OpenROAD tool
+openroad
+```
+
+**Explanation**: Launches the OpenROAD tool in command-line mode for performing timing analysis and other chip design operations.
+
+---
+
+```tcl
+# Reading LEF file
+read_lef /openLANE_flow/designs/picorv32a/runs/26-06_13-54/tmp/merged.lef
+```
+
+**Explanation**: Loads the physical layout information such as cells, macros, and routing layers needed to interpret the DEF.
+
+---
+
+```tcl
+# Reading DEF file
+read_def /openLANE_flow/designs/picorv32a/runs/26-06_13-54/results/routing/picorv32a.def
+```
+
+**Explanation**: Loads the physical layout of the placed and routed design.
+
+---
+
+```tcl
+# Creating an OpenROAD database to work with
+write_db pico_route.db
+```
+
+**Explanation**: Saves the current state of the design into an OpenROAD database for quick reloads.
+
+---
+
+```tcl
+# Loading the created database in OpenROAD
+read_db pico_route.db
+```
+
+**Explanation**: Reloads the previously saved OpenROAD database file.
+
+---
+
+```tcl
+# Read netlist post CTS
+read_verilog /openLANE_flow/designs/picorv32a/runs/26-06_13-54/results/synthesis/picorv32a.synthesis_preroute.v
+```
+
+**Explanation**: Reads in the synthesized Verilog netlist that reflects the post-CTS (Clock Tree Synthesis) logic.
+
+---
+
+```tcl
+# Read library for design
+read_liberty $::env(LIB_SYNTH_COMPLETE)
+```
+
+**Explanation**: Loads the Liberty (.lib) file that defines timing and power information for each standard cell.
+
+---
+
+```tcl
+# Link design and library
+link_design picorv32a
+```
+
+**Explanation**: Matches the netlist with the cells in the loaded Liberty file, establishing a complete representation of the design for analysis.
+
+---
+
+```tcl
+# Read in the custom SDC file
+read_sdc /openLANE_flow/designs/picorv32a/src/my_base.sdc
+```
+
+**Explanation**: Loads the Synopsys Design Constraints (SDC) file which specifies clock definitions, I/O constraints, and timing exceptions.
+
+---
+
+```tcl
+# Setting all clocks as propagated clocks
+set_propagated_clock [all_clocks]
+```
+
+**Explanation**: Tells the STA engine to use actual clock delays as routed in the netlist instead of assuming ideal clocks.
+
+---
+
+```tcl
+# Read SPEF
+read_spef /openLANE_flow/designs/picorv32a/runs/26-06_13-54/results/routing/picorv32a.spef
+```
+
+**Explanation**: Loads the parasitic resistance and capacitance information generated after routing. This is crucial for accurate delay and slew computation.
+
+---
+
+```tcl
+# Generate a custom timing report
+report_checks -path_delay min_max -fields {slew trans net cap input_pins} -format full_clock_expanded -digits 4
+```
+
+**Explanation**: Generates a detailed setup and hold timing report that includes:
+
+* **slew**: rate of signal transition
+* **trans**: transition time
+* **net**: net delay
+* **cap**: net capacitance
+* **input\_pins**: affected pins
+
+---
+
+```tcl
+# Exit to OpenLANE flow
+exit
+```
+
+**Explanation**: Terminates the OpenROAD session.
+
+---
+
+This sequence enables accurate post-route Static Timing Analysis (STA) using OpenROAD, incorporating layout parasitics and clock tree effects.
+
+
+screenshots of running these commands:
+--
+
+
 
 </details>  
 
