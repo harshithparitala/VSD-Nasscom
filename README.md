@@ -1864,7 +1864,6 @@ condition 2 verified:
 
 <img width="955" height="925" alt="Image" src="https://github.com/user-attachments/assets/34df0964-7bae-4f6a-81fd-a7db4e6a059f" />
 
-<img width="1920" height="937" alt="Image" src="https://github.com/user-attachments/assets/bb4cba53-7718-4851-a659-1088ad8b54c0" />
 
 condition 3 verified :
 
