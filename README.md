@@ -1395,27 +1395,29 @@ For a 3.3 V supply:
 
 | Parameter | Value          |
 | --------- | -------------- |
-| T(20 %)   | **2.18242 ns** |
-| T(80 %)   | **2.24638 ns** |
+| T(20 %)   | **2.11938 ns** |
+| T(80 %)   | **2.17953 ns** |
 
 ```
-tr = 2.24638 ns − 2.18242 ns = 0.06396 ns = 63.96 ps
+tr = 2.217953 ns − 2.11938 ns = 0.06015 ns = 60.1 ps
 ```
 
-So the **rise transition time** for this inverter output is **≈ 64 ps**.
+So the **rise transition time** for this inverter output is **≈ 60.1 ps**.
 
 screenshots :-
 
 
 20% :
 
-![Image](https://github.com/user-attachments/assets/91a38934-ee3b-452e-bc78-55990cf16b0d)
+![Image](https://github.com/user-attachments/assets/76f0ed03-acaa-4419-bf3d-794007806b19)
 
 ![Image](https://github.com/user-attachments/assets/3286494f-078e-497f-a924-f2fb697ad720)
 
 
 80% :
-![Image](https://github.com/user-attachments/assets/76f0ed03-acaa-4419-bf3d-794007806b19)
+
+![Image](https://github.com/user-attachments/assets/91a38934-ee3b-452e-bc78-55990cf16b0d)
+
 
 ![Image](https://github.com/user-attachments/assets/7e28ba8a-3198-442b-9bd9-16f7db818baa)
 
@@ -1446,14 +1448,14 @@ For a 3.3 V supply:
 
 | Parameter | Value         |
 | --------- | ------------- |
-| T(80%)    | **4.0536 ns** |
-| T(20%)    | **4.0955 ns** |
+| T(80%)    | **4.05 ns** |
+| T(20%)    | **4.0961 ns** |
 
 ```
-tf = 4.0955 ns − 4.0536 ns = 0.0419 ns = 41.9 ps
+tf = 4.0961 ns − 4.05 ns = 0.0461 ns = 46.1 ps
 ```
 
-So the **fall transition time** for this inverter output is **≈ 41.9 ps**.
+So the **fall transition time** for this inverter output is **≈ 46.1 ps**.
 
 screenshots :
 
@@ -1493,14 +1495,14 @@ For a **3.3 V** supply, **50 % × 3.3 V = 1.65 V**.
 
 | Parameter               | Value          |
 | ----------------------- | -------------- |
-| T\_input (50 % falling) | **2.15008 ns** |
-| T\_output (50 % rising) | **2.21144 ns** |
+| T\_input (50 % falling) | **2.14986 ns** |
+| T\_output (50 % rising) | **2.21043 ns** |
 
 ```
-tpLH = 2.21144 ns − 2.15008 ns = 0.06136 ns = 61.36 ps
+tpLH = 2.21043 ns − 2.14986 ns = 0.06057 ns = 60.5 ps
 ```
 
-So the **rise cell delay** for this inverter is **≈ 61.4 ps**.
+So the **rise cell delay** for this inverter is **≈ 60.5 ps**.
 
 screenshots :
 
@@ -1534,14 +1536,14 @@ For a **3.3 V** supply, **50 % × 3.3 V = 1.65 V**.
 
 | Parameter                | Value       |
 | ------------------------ | ----------- |
-| T\_input (50 % rising)   | **4.05 ns** |
-| T\_output (50 % falling) | **4.07 ns** |
+| T\_input (50 % rising)   | **4.04943 ns** |
+| T\_output (50 % falling) | **4.0777 ns** |
 
 ```
-tpHL = 4.07 ns − 4.05 ns = 0.02 ns = 20 ps
+tpHL = 4.0777 ns − 4.04943 ns = 0.02827 ns = 28.27 ps
 ```
 
-So the **fall cell delay** for this inverter is **≈ 20 ps**.
+So the **fall cell delay** for this inverter is **≈ 28.27 ps**.
 
 screenshots:
 
@@ -1850,12 +1852,26 @@ magic -T sky130A.tech sky130_inv.mag &
 
 ### Screenshot: `tracks.info` of `sky130_fd_sc_hd`:
 
+tracks.info :
+
+<img width="888" height="898" alt="Image" src="https://github.com/user-attachments/assets/cfcf34f3-4299-4e38-a9ad-05a5716c9a2a" />
+
+condition 1verified :
+
+<img width="888" height="898" alt="Image" src="https://github.com/user-attachments/assets/fb78055e-43a5-4542-841d-644409d72399" />
+
+condition 2 verified:
 
 <img width="1920" height="937" alt="Image" src="https://github.com/user-attachments/assets/bb4cba53-7718-4851-a659-1088ad8b54c0" />
+
+condition 3 verified :
+
 <img width="955" height="925" alt="Image" src="https://github.com/user-attachments/assets/34df0964-7bae-4f6a-81fd-a7db4e6a059f" />
+
+layout :
+
 <img width="1920" height="937" alt="Image" src="https://github.com/user-attachments/assets/70e0bf0c-36ac-4f5f-b91d-502cb680a906" />
-<img width="888" height="898" alt="Image" src="https://github.com/user-attachments/assets/fb78055e-43a5-4542-841d-644409d72399" />
-<img width="888" height="898" alt="Image" src="https://github.com/user-attachments/assets/cfcf34f3-4299-4e38-a9ad-05a5716c9a2a" />
+
 
 
 
@@ -1891,8 +1907,8 @@ grid 0.46um 0.34um 0.23um 0.17um
 - `0.23um`: X origin offset to align grid with locali layer's track origin.
 - `0.17um`: Y origin offset to align grid with locali layer's track origin.
 
-Screenshots of commands run :
 
+<img width="1920" height="937" alt="Image" src="https://github.com/user-attachments/assets/f11ed701-2bb7-4d29-9b43-9d3180239fd6" />
 
 
 
@@ -1951,8 +1967,6 @@ lef write
 screenshots of command run :
 
 
-
-<img width="1920" height="937" alt="Image" src="https://github.com/user-attachments/assets/f11ed701-2bb7-4d29-9b43-9d3180239fd6" />
 <img width="888" height="898" alt="Image" src="https://github.com/user-attachments/assets/08b7e4c0-409f-429e-9124-ff14a1c21dae" />
 
 
@@ -2358,17 +2372,19 @@ Screenshots of commands run
 
 OR gate of drive strength 2 is driving 4 fanouts
 
+
+
 ### Timing Optimization by Replacing Cell with OR Gate (Drive Strength 4)
 
 ```tcl
 # Report all connections to a specific net
-report_net -connections _11672_
+report_net -connections _10566_
 
 # Check syntax and usage for cell replacement command
 help replace_cell
 
 # Replace an existing cell instance with a higher drive strength OR3 gate
-replace_cell _14510_ sky130_fd_sc_hd__or3_4
+replace_cell _13165_ sky130_fd_sc_hd__or3_4
 
 # Generate a detailed timing report for analysis after replacement
 report_checks -fields {net cap slew input_pins} -digits 4
@@ -2383,13 +2399,13 @@ report_checks -fields {net cap slew input_pins} -digits 4
 
 screenshots of running commands:
 
+
+<img width="888" height="898" alt="Image" src="https://github.com/user-attachments/assets/bb27a5ea-2a24-41ec-9d54-4b90141aa351" />
+
+<img width="955" height="925" alt="Image" src="https://github.com/user-attachments/assets/58e9eac0-102a-4949-a13b-3e3302d94336" />
+
+
 Result - slack reduced
-
-
-OR gate of drive strength 2 is driving 4 fanouts
-
-screenshots of running commands:
-
 
 
 
@@ -2398,13 +2414,13 @@ OR gate of drive strength 2 driving OA gate has more delay
 
 ```tcl
 # Report all connections to a specific net
-report_net -connections _11672_
+report_net -connections _10543_
 
 # Check syntax and usage for cell replacement command
 help replace_cell
 
 # Replace an existing cell instance with a higher drive strength OR3 gate
-replace_cell _14510_ sky130_fd_sc_hd__or3_4
+replace_cell _13132_ sky130_fd_sc_hd__or4_4
 
 # Generate a detailed timing report for analysis after replacement
 report_checks -fields {net cap slew input_pins} -digits 4
@@ -2413,14 +2429,42 @@ report_checks -fields {net cap slew input_pins} -digits 4
 
 screenshots of running commands :
 
-<img width="888" height="898" alt="Image" src="https://github.com/user-attachments/assets/bb27a5ea-2a24-41ec-9d54-4b90141aa351" />
+
+
 <img width="955" height="925" alt="Image" src="https://github.com/user-attachments/assets/58e9eac0-102a-4949-a13b-3e3302d94336" />
-<img width="888" height="898" alt="Image" src="https://github.com/user-attachments/assets/17fd7f42-1a7e-4b59-b7ee-f4fecd3608d4" />
-<img width="888" height="898" alt="Image" src="https://github.com/user-attachments/assets/6946a75c-53a4-497d-afa9-c6735192d712" />
-<img width="888" height="898" alt="Image" src="https://github.com/user-attachments/assets/58dc644b-03e9-4baf-a1ba-766ef0754ee5" />
+
+
+
+commands to perform analysis and optimize timing by replacing with OR gate of drive strngth of 4
+
+commands :
+
+```tcl
+# Report all connections to a specific net
+report_net -connections _10559_
+
+# Check syntax and usage for cell replacement command
+help replace_cell
+
+# Replace an existing cell instance with a higher drive strength OR3 gate
+replace_cell _13157_ sky130_fd_sc_hd__or4_4
+
+# Generate a detailed timing report for analysis after replacement
+report_checks -fields {net cap slew input_pins} -digits 4
+```
+
+screenshots :
+
 <img width="888" height="898" alt="Image" src="https://github.com/user-attachments/assets/cc6eaf44-74c0-4678-b99e-a5e48d489c0b" />
+
 <img width="888" height="898" alt="Image" src="https://github.com/user-attachments/assets/29ddbd2c-6b75-4f36-b9de-f79bd21ff937" />
+
 <img width="888" height="898" alt="Image" src="https://github.com/user-attachments/assets/e5ff840a-6950-4cad-92a5-c177429dfcb7" />
+
+generating custom timing report :
+--
+
+
 <img width="1853" height="910" alt="Image" src="https://github.com/user-attachments/assets/6c447300-f481-4f3d-91df-dc4f1efc8105" />
 
 
