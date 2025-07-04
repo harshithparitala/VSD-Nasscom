@@ -1815,19 +1815,786 @@ Tasks:-
 1.**Fix small DRC errors** and verify the design is ready to be inserted into the flow.  
 -
 
+### Conditions to Verify Before Using a Custom Designed Standard Cell
+
+Before integrating your custom standard cell (e.g., inverter) into the OpenLane flow, **ensure the following conditions are satisfied**:
+
+1. **Port Alignment**  
+   ➤ *The input and output ports of the standard cell should lie on the intersection of the vertical and horizontal tracks.*
+
+2. **Cell Width**  
+   ➤ *The width of the standard cell must be an **odd multiple** of the horizontal track pitch.*
+
+3. **Cell Height**  
+   ➤ *The height of the standard cell must be an **even multiple** of the vertical track pitch.*
+
+These conditions are essential to ensure **DRC-clean layouts** and **proper integration with placement and routing tools**.
+
+---
+
+### Commands to Open the Custom Inverter Layout in Magic
+
+```bash
+# Step 1: Change directory to your standard cell design location
+cd Desktop/work/tools/openlane_working_dir/openlane/vsdstdcelldesign
+
+# Step 2: Launch Magic layout editor with the sky130A technology file
+magic -T sky130A.tech sky130_inv.mag &
+```
+
+- `sky130A.tech`: Technology file for SkyWater 130nm PDK
+- `sky130_inv.mag`: Magic layout file of the custom inverter
+- `&`: Runs Magic in the background so you can still use the terminal
+
+---
+
+### Screenshot: `tracks.info` of `sky130_fd_sc_hd`:
+
+
+
+
+###  Commands to Set Grid as Tracks of Locali Layer in Magic (via tkcon)
+
+```tcl
+# Step 1: Start Magic and open your layout
+magic -T sky130A.tech sky130_inv.mag &
+```
+
+```tcl
+# Step 2: Open tkcon window inside Magic (if not already visible)
+# From Magic console, type:
+tkcon
+```
+
+```tcl
+# Step 3: Get help on grid command syntax
+help grid
+```
+
+```tcl
+# Step 4: Set grid to match the tracks of the locali (local interconnect) layer
+# Format: grid <Xgrid> <Ygrid> <Xorigin> <Yorigin>
+grid 0.46um 0.34um 0.23um 0.17um
+```
+
+---
+
+- `grid`: Command to set or display the snap grid for layout editing.
+- `0.46um`: Grid pitch along the X-axis (horizontal track spacing of locali layer).
+- `0.34um`: Grid pitch along the Y-axis (vertical track spacing of locali layer).
+- `0.23um`: X origin offset to align grid with locali layer's track origin.
+- `0.17um`: Y origin offset to align grid with locali layer's track origin.
+
+Screenshots of commands run :
 
 
 
 
 
+2.**Save the finalized layout** with a custom name and reopen it.  
+-
+
+
+command for tkon window to save the layout with custom name 
+
+###  Command to Save the Layout with Custom Name
+
+```tcl
+# Save the current layout with a new name
+save sky130_vsdinv.mag
+```
+
+---
+
+###  Command to Open the Newly Saved Layout
+
+```bash
+# Open the custom inverter layout in Magic using the saved file
+magic -T sky130A.tech sky130_vsdinv.mag &
+```
+
+- `save sky130_vsdinv.mag`: Saves the current layout with the custom name.
+- `magic -T sky130A.tech sky130_vsdinv.mag &`: Opens the newly saved layout in Magic.
+
+screenshots of newly saved layout :
+
+
+
+
+3.**Generate a LEF** file from the layout.  
+--
+
+### ℹ What is a LEF?
+
+- **LEF** stands for **Library Exchange Format**.
+- It provides a lightweight, abstract description of a standard‑cell or macro layout, including:
+  - Cell boundary and obstruction boxes
+  - Pin locations, shapes, and layers
+  - Technology routing layers, direction, pitch, and spacing
+- Because LEF omits detailed transistor geometry (present in GDS), it is efficient for place‑and‑route (P&R) tools during floor‑planning, placement, and routing.
+- P&R engines read LEF to ensure cells align to legal tracks and that routing honors design rules.
+- After placement and routing, a detailed GDS (or DEF) file is output for sign‑off verification and mask generation.
+
+### Command to Generate a LEF File from the Layout (tkcon)
+
+```tcl
+# Write a LEF view of the current layout
+lef write
+```
+screenshots of command run :
+
+
+4.**Copy the new LEF** (and any required `.lib` files) into the `picorv32a/src` directory.  
+--
+
+### Commands to Copy Necessary Files into `picorv32a/src`
+
+```bash
+# Copy the LEF file for the custom inverter
+cp sky130_vsdinv.lef ~/Desktop/work/tools/openlane_working_dir/openlane/designs/picorv32a/src/
+
+# Verify that the LEF file was copied
+ls ~/Desktop/work/tools/openlane_working_dir/openlane/designs/picorv32a/src/
+
+# Copy Liberty (.lib) timing libraries for Sky130 HD cells
+cp libs/sky130_fd_sc_hd__* ~/Desktop/work/tools/openlane_working_dir/openlane/designs/picorv32a/src/
+
+# Verify that the .lib files were copied
+ls ~/Desktop/work/tools/openlane_working_dir/openlane/designs/picorv32a/src/
+```
+
+---
+
+**Why these steps?**
+- `cp sky130_vsdinv.lef …`: Places the cell’s abstract physical view where OpenLane can find it during floor‑planning and routing.
+- `cp libs/sky130_fd_sc_hd__* …`: Adds timing libraries so synthesis and STA stages recognize the cell.
+- `ls …`: Quick sanity check to confirm files landed in the correct directory.
+
+
+screenshots of command run:
+
+
+
+5.**Edit `config.tcl`** to reference the new library file and include the extra LEF in the OpenLane flow.  
+--
+
+### Commands to Update `config.tcl` to Include Custom Cell in OpenLane Flow
+
+```tcl
+# Set custom Liberty files for synthesis and STA
+set ::env(LIB_SYNTH) "$::env(OPENLANE_ROOT)/designs/picorv32a/src/sky130_fd_sc_hd__typical.lib"
+set ::env(LIB_FASTEST) "$::env(OPENLANE_ROOT)/designs/picorv32a/src/sky130_fd_sc_hd__fast.lib"
+set ::env(LIB_SLOWEST) "$::env(OPENLANE_ROOT)/designs/picorv32a/src/sky130_fd_sc_hd__slow.lib"
+set ::env(LIB_TYPICAL) "$::env(OPENLANE_ROOT)/designs/picorv32a/src/sky130_fd_sc_hd__typical.lib"
+
+# Include additional LEF files from the src directory
+set ::env(EXTRA_LEFS) [glob $::env(OPENLANE_ROOT)/designs/$::env(DESIGN_NAME)/src/*.lef]
+```
+
+---
+
+###  Explanation
+- These `set` commands ensure that OpenLane uses the updated `.lib` files for synthesis and timing analysis.
+- `EXTRA_LEFS` allows OpenLane to recognize and utilize additional LEF files, like your custom inverter, during floorplanning and placement.
+
+screenshots of command run:
+
+
+
+6.**Run OpenLane synthesis** with the newly inserted custom inverter cell.  
+-
+
+### Commands to Invoke OpenLane Flow, Include New LEF, and Run Synthesis
+
+```bash
+# Change to the OpenLane flow directory
+cd ~/Desktop/work/tools/openlane_working_dir/openlane
+
+# Launch the OpenLane Docker container (alias 'docker' already set up)
+docker
+
+# Inside the container, start OpenLane in interactive mode
+./flow.tcl -interactive
+```
+
+```tcl
+# Load the OpenLane Tcl package
+package require openlane 0.9
+
+# Prepare the 'picorv32a' design (creates run directory, copies sources, etc.)
+prep -design picorv32a
+
+# Add all LEF files from the design's src directory (includes custom cell)
+set lefs [glob $::env(DESIGN_DIR)/src/*.lef]
+add_lefs -src $lefs
+
+# Run synthesis
+run_synthesis
+```
+
+---
+
+- Step 1–3: Enter the OpenLane Docker environment and launch the interactive Tcl shell.
+- Step 4: Ensures the correct OpenLane version is loaded.
+- Step 5: Generates the working directories (`runs/`), copies sources, and sets up config files.
+- Step 6: Dynamically includes all `.lef` files in `src/`, so your custom inverter is recognized during floor-planning.
+- Step 7: Executes the synthesis stage (Yosys and OpenROAD flow synthesis), producing a synthesized netlist and initial timing reports.
+
+After synthesis completes, you can proceed with `run_floorplan`, `run_placement`, `run_cts`, `run_routing`, or simply call `run_flow` to execute the entire RTL-to-GDSII flow.
+
+Screenshots of commands run :
+
+
+ 
+7.**Reduce or eliminate new violations** introduced by the custom inverter by tweaking design parameters.  
+--
+
+
+Noting down current design values generated before modifying parameters to improve timing
+
+### Commands to Adjust Synthesis Parameters for Timing Optimization
+
+```bash
+# Re‑prepare the design to update variables
+prep -design picorv32a -tag 21-06_17-40 -overwrite
+```
+
+```tcl
+# Add all LEF files from the design's src directory (includes merged.lef and custom cells)
+set lefs [glob $::env(DESIGN_DIR)/src/*.lef]
+add_lefs -src $lefs
+
+# Display the current synthesis strategy
+echo $::env(SYNTH_STRATEGY)
+
+# Set a timing‑driven synthesis strategy
+set ::env(SYNTH_STRATEGY) "DELAY 3"
+
+# Check whether buffering is enabled
+echo $::env(SYNTH_BUFFERING)
+
+# Display current sizing setting
+echo $::env(SYNTH_SIZING)
+
+# Enable gate sizing during synthesis
+set ::env(SYNTH_SIZING) 1
+
+# Verify the selected driving cell
+echo $::env(SYNTH_DRIVING_CELL)
+
+# Run synthesis with the updated parameters
+run_synthesis
+```
+
+---
+
+- The `prep` command with `-overwrite` regenerates the run directory while preserving updated configuration values.
+- `DELAY 3` directs Yosys to target a more aggressive delay optimization point (higher number tightens timing).
+- Enabling `SYNTH_SIZING` allows size‑up for critical paths during synthesis.
+- Buffering can be toggled via `SYNTH_BUFFERING`; viewing its value helps decide if additional buffers are required.
+- Running `run_synthesis` produces a new synthesized netlist reflecting these timing‑oriented settings.
+
+Screenshot of merged.lef in tmp directory with our custom inverter as macro
+
+
+Screenshots of commands run
+
+
+
+Comparing to previously noted run values area has increased and worst negative slack has become 0
+
+
+8.After synthesis accepts the custom inverter, **run floorplan and placement** to confirm the cell is integrated in the P & R flow.  
+---
+
+
+
+
+### Commands to Run Floorplan and Placement
+
+```tcl
+# Attempt the floorplan stage
+run_floorplan
+
+# If run_floorplan reports an error, execute the sequence manually
+init_floorplan
+place_io
+tap_decap_or
+```
+Screenshots of commands run
+
+
+
+Screenshots of commands run
 
 
 
 
 
+```tcl
+# Run the placement stage
+run_placement
+```
+
+---
+
+### Viewing the Placement DEF in Magic
+
+```bash
+# Change to the placement results directory (replace with your current run tag if different)
+cd ~/Desktop/work/tools/openlane_working_dir/openlane/designs/picorv32a/runs/21-06_17-40/results/placement/
+
+# Load the placement DEF in Magic
+magic -T ~/Desktop/work/tools/openlane_working_dir/pdks/sky130A/libs.tech/magic/sky130A.tech \
+      lef read ../../tmp/merged.lef \
+      def read picorv32a.placement.def &
+```
+
+---
+
+### Explanation
+- `run_floorplan` invokes the standard floor‑planning script. When it fails, the individual commands `init_floorplan`, `place_io`, and `tap_decap_or` reproduce the same sequence.
+- `run_placement` performs global and detailed placement.
+- The final commands open the generated DEF in Magic for visual inspection. Ensure the run tag (`21-06_17-40`) matches your current run directory.
 
 
 
+
+Screenshot of placement def in magic
+
+Screenshot of custom inverter inserted in placement def with proper abutment
+
+Command for tkcon window to view internal layers of cells
+
+### Viewing Internal Connectivity Layers in Magic
+
+```tcl
+# Command to expand internal geometry and show all connectivity layers
+expand
+```
+
+- `expand`: This Magic command reveals all internal routing and connectivity details within the loaded layout. Useful for visually verifying routed nets or cell connections.
+
+
+
+
+Abutment of power pins with other cell from library clearly visible
+
+
+
+9.**Perform post-synthesis timing analysis** using OpenSTA.  
+--
+
+### Baseline Synthesis Run for Initial Timing Analysis
+
+This procedure prepares the *picorv32a* design in OpenLane, includes the custom LEF, performs a **minimal‑tuning** synthesis run, and produces timing reports that still contain violations. No aggressive timing parameters (such as `SYNTH_STRATEGY` or extra buffering) are applied—only gate sizing is enabled to obtain a realistic starting point.
+
+```bash
+# 1. Change to the OpenLane flow directory
+cd ~/Desktop/work/tools/openlane_working_dir/openlane
+
+# 2. Enter the OpenLane Docker container (the long command is aliased to 'docker')
+docker
+
+# 3. Inside the container, launch OpenLane in interactive mode
+./flow.tcl -interactive
+```
+
+```tcl
+# 4. Load the OpenLane Tcl package (version 0.9)
+package require openlane 0.9
+
+# 5. Prepare the 'picorv32a' design (creates the run directory and copies sources)
+prep -design picorv32a
+
+# 6. Add all LEF files from the design's src directory (includes custom inverter)
+set lefs [glob $::env(DESIGN_DIR)/src/*.lef]
+add_lefs -src $lefs
+
+# 7. Enable basic gate sizing
+set ::env(SYNTH_SIZING) 1
+
+# 8. Run synthesis (Yosys + OpenROAD synthesis)
+run_synthesis
+```
+
+---
+
+#### What Each Step Does
+1. **Directory change**: Ensures subsequent commands execute in the OpenLane repo.
+2. **`docker`**: Launches the pre‑configured OpenLane container with PDK mounts.
+3. **`./flow.tcl -interactive`**: Opens the Tcl shell where OpenLane commands are entered.
+4. **`package require openlane`**: Loads OpenLane Tcl helpers.
+5. **`prep`**: Generates the `runs/<date>/` workspace, copies RTL and config files.
+6. **`add_lefs`**: Registers your custom LEF so the tool recognises the new cell.
+7. **`SYNTH_SIZING`**: Allows Yosys to upsise cells on critical paths during synthesis; no other timing knobs are changed.
+8. **`run_synthesis`**: Produces the synthesised netlist and timing reports.
+
+The timing reports for this baseline run will be written to:
+```
+\<run_tag\>/reports/synthesis/
+```
+Review `timing.rpt` or `openroad.sdc.rpt` to see worst negative slack (WNS) and total negative slack (TNS). These violations provide a reference before applying advanced timing optimisations.
+
+
+
+### STA Configuration for Analysis
+
+This procedure sets up the *picorv32a* design for baseline Static Timing Analysis (STA) using custom configuration files. These steps ensure that synthesis results (with known violations) are analyzed using user-defined constraints.
+
+---
+
+### Custom Files Used
+
+- **`pre_sta.conf`** — placed in the OpenLane root directory
+- **`my_base.sdc`** — placed in `openlane/designs/picorv32a/src/`, derived from `openlane/scripts/base.sdc`
+
+These files allow you to:
+- Define input/output delays
+- Specify clock constraints
+- Configure driving and load conditions
+- Apply timing exceptions and false paths
+
+---
+
+
+
+```bash
+# Change to the OpenLane flow directory
+cd ~/Desktop/work/tools/openlane_working_dir/openlane
+
+# Invoke OpenSTA with the custom configuration script
+sta pre_sta.conf
+```
+
+The `pre_sta.conf` script loads the synthesized netlist and applies the timing constraints defined in `my_base.sdc`. Review the resulting reports for worst‑case slack, fanout, and critical path information.
+
+---
+
+
+
+
+To mitigate delay caused by excessive fanout, rerun synthesis with a tighter fanout limit.
+
+```tcl
+# Re‑prepare the design (overwrite previous run directory)
+prep -design picorv32a -tag 21-06_17-40 -overwrite
+
+# Add all LEF files from the design's src directory (includes custom cells)
+set lefs [glob $::env(DESIGN_DIR)/src/*.lef]
+add_lefs -src $lefs
+
+# Enable gate sizing
+set ::env(SYNTH_SIZING) 1
+
+# Limit maximum fanout per net to 4
+set ::env(SYNTH_MAX_FANOUT) 4
+
+# Verify the selected driving cell
+echo $::env(SYNTH_DRIVING_CELL)
+
+# Run synthesis with the updated constraints
+run_synthesis
+```
+
+After synthesis completes, compare the new timing reports in:
+```
+runs/21-06_17-40/reports/synthesis/
+```
+Key metrics to observe:
+- Changes in worst negative slack (WNS)
+- Reduction in total negative slack (TNS)
+- Fanout values on previously critical nets
+
+
+Screenshots of commands run
+
+
+
+
+10.**Apply timing ECO fixes** to clear any remaining timing violations.  
+--
+
+OR gate of drive strength 2 is driving 4 fanouts
+
+### Timing Optimization by Replacing Cell with OR Gate (Drive Strength 4)
+
+```tcl
+# Report all connections to a specific net
+report_net -connections _11672_
+
+# Check syntax and usage for cell replacement command
+help replace_cell
+
+# Replace an existing cell instance with a higher drive strength OR3 gate
+replace_cell _14510_ sky130_fd_sc_hd__or3_4
+
+# Generate a detailed timing report for analysis after replacement
+report_checks -fields {net cap slew input_pins} -digits 4
+```
+
+---
+
+
+- `report_net -connections <net>`: Identifies which cell instances are connected to the specified net.
+- `replace_cell <instance> <new_cell>`: Substitutes the instance with a specified higher drive-strength variant to reduce delay.
+- `report_checks`: Used to regenerate the STA report with specific fields for accurate timing evaluation.
+
+screenshots of running commands:
+
+Result - slack reduced
+
+
+OR gate of drive strength 2 is driving 4 fanouts
+
+screenshots of running commands:
+
+
+
+
+OR gate of drive strength 2 driving OA gate has more delay
+
+
+```tcl
+# Report all connections to a specific net
+report_net -connections _11672_
+
+# Check syntax and usage for cell replacement command
+help replace_cell
+
+# Replace an existing cell instance with a higher drive strength OR3 gate
+replace_cell _14510_ sky130_fd_sc_hd__or3_4
+
+# Generate a detailed timing report for analysis after replacement
+report_checks -fields {net cap slew input_pins} -digits 4
+```
+
+
+screenshots of running commands :
+
+
+We started ECO fixes at wns -23.9000 and now we stand at wns -22.6173 we reduced around 1.2827 ns of violation.
+
+
+11.**Replace the old netlist** with the ECO-fixed netlist and rerun floorplan, placement, and CTS.  
+-
+
+
+### Commands to Backup Original Netlist and Prepare for Updated Netlist Insertion
+
+```bash
+# Change from home directory to synthesis results directory
+cd ~/Desktop/work/tools/openlane_working_dir/openlane/designs/picorv32a/runs/21-06_17-40/results/synthesis/
+
+# List contents of the directory
+ls
+
+# Copy and rename the existing synthesis netlist
+cp picorv32a.synthesis.v picorv32a.synthesis_old.v
+
+# Confirm the copy
+ls
+```
+
+Once the backup is complete, you can overwrite the original netlist from within OpenSTA using:
+
+```tcl
+# Save the updated netlist after optimizations
+write_verilog picorv32a.synthesis.v
+```
+
+This updated netlist is now ready to be used in the next stages of the OpenLane flow such as floorplan, placement, and routing.
+
+Screenshot of commands run
+
+### Commands to Overwrite the Synthesis Netlist After Timing Optimization
+
+```tcl
+# Check the syntax and usage of the write_verilog command
+help write_verilog
+
+# Overwrite the existing synthesis netlist with the updated version
+write_verilog /home/vsduser/Desktop/work/tools/openlane_working_dir/openlane/designs/picorv32a/runs/21-06_17-40/results/synthesis/picorv32a.synthesis.v
+
+# Exit OpenSTA when timing analysis is complete
+exit
+```
+
+These steps replace the original synthesized netlist with the optimized version and cleanly exit the OpenSTA session.
+
+
+Screenshot of commands run
+
+
+Verified that the netlist is overwritten :
+
+
+
+
+### Commands to Continue Clean Design Flow with 0 Violation Baseline
+
+```tcl
+# Re-prepare the design to reload clean variables and LEFs
+prep -design picorv32a -tag 21-06_17-40 -overwrite
+
+# Include all LEFs from the src directory including merged.lef
+set lefs [glob $::env(DESIGN_DIR)/src/*.lef]
+add_lefs -src $lefs
+
+# Set synthesis strategy to delay optimization
+set ::env(SYNTH_STRATEGY) "DELAY 3"
+
+# Enable gate sizing during synthesis
+set ::env(SYNTH_SIZING) 1
+
+# Run synthesis
+run_synthesis
+
+# Floorplanning (equivalent to run_floorplan)
+init_floorplan
+place_io
+tap_decap_or
+
+# Run placement
+run_placement
+
+# If placement stage throws CTS-related errors, clear the CTS library variable
+unset ::env(LIB_CTS)
+
+# Run Clock Tree Synthesis
+run_cts
+```
+
+This flow continues the clean design path starting from synthesis with tuned parameters and proceeds to floorplan, placement, and CTS stages using the 0-violation baseline.
+
+
+Screenshots of commands run
+
+
+
+12. **Run post-CTS timing analysis** in OpenROAD.  
+---
+
+### Commands to Run Timing Analysis Using OpenROAD (Integrated OpenSTA)
+
+```tcl
+# Launch the OpenROAD tool
+openroad
+
+# Read the LEF file (custom and standard cells)
+read_lef /openLANE_flow/designs/picorv32a/runs/21-06_17-40/tmp/merged.lef
+
+# Read the DEF file post CTS
+read_def /openLANE_flow/designs/picorv32a/runs/21-06_17-40/results/cts/picorv32a.cts.def
+
+# Create a working OpenROAD database
+write_db pico_cts.db
+
+# Load the created database (optional reloading step)
+read_db pico_cts.db
+
+# Read the netlist after CTS
+read_verilog /openLANE_flow/designs/picorv32a/runs/21-06_17-40/results/synthesis/picorv32a.synthesis_cts.v
+
+# Read the complete liberty file
+read_liberty $::env(LIB_SYNTH_COMPLETE)
+
+# Link the design to the loaded library
+link_design picorv32a
+
+# Read the custom timing constraints
+read_sdc /openLANE_flow/designs/picorv32a/src/my_base.sdc
+
+# Treat all clocks as propagated (CTS clock tree is active)
+set_propagated_clock [all_clocks]
+
+# Verify usage and available options for report_checks
+help report_checks
+
+# Generate a detailed timing report
+report_checks -path_delay min_max -fields {slew trans net cap input_pins} -format full_clock_expanded -digits 4
+
+# Exit OpenROAD
+exit
+```
+
+This sequence performs full post-CTS timing analysis in OpenROAD using custom constraints and reports delay, slew, and net loading for all paths.
+
+
+Screenshots of commands run and timing report generated
+
+
+
+
+
+13.**Investigate post-CTS timing** further by removing `sky130_fd_sc_hd__clkbuf_1` from `CTS_CLK_BUFFER_LIST` and re-analyzing.
+--
+
+### Commands to Run OpenROAD Timing Analysis After Modifying CTS_CLK_BUFFER_LIST
+
+```tcl
+# Check the current CTS clock buffer list
+echo $::env(CTS_CLK_BUFFER_LIST)
+
+# Remove 'sky130_fd_sc_hd__clkbuf_1' from the list
+set ::env(CTS_CLK_BUFFER_LIST) [lreplace $::env(CTS_CLK_BUFFER_LIST) 0 0]
+
+# Confirm removal
+echo $::env(CTS_CLK_BUFFER_LIST)
+
+# Check current value of CURRENT_DEF
+echo $::env(CURRENT_DEF)
+
+# Set CURRENT_DEF to placement DEF for re-running CTS
+set ::env(CURRENT_DEF) /openLANE_flow/designs/picorv32a/runs/21-06_17-40/results/placement/picorv32a.placement.def
+
+# Re-run CTS with updated buffer list
+run_cts
+
+# Confirm final CTS buffer list
+echo $::env(CTS_CLK_BUFFER_LIST)
+
+# Open OpenROAD
+openroad
+
+# Read LEF and DEF
+read_lef /openLANE_flow/designs/picorv32a/runs/21-06_17-40/tmp/merged.lef
+read_def /openLANE_flow/designs/picorv32a/runs/21-06_17-40/results/cts/picorv32a.cts.def
+
+# Save OpenROAD DB and optionally reload
+write_db pico_cts1.db
+read_db pico_cts.db
+
+# Read post-CTS netlist
+read_verilog /openLANE_flow/designs/picorv32a/runs/21-06_17-40/results/synthesis/picorv32a.synthesis_cts.v
+
+# Read Liberty file and link design
+read_liberty $::env(LIB_SYNTH_COMPLETE)
+link_design picorv32a
+
+# Read SDC and set clock propagation
+read_sdc /openLANE_flow/designs/picorv32a/src/my_base.sdc
+set_propagated_clock [all_clocks]
+
+# Generate timing and skew reports
+report_checks -path_delay min_max -fields {slew trans net cap input_pins} -format full_clock_expanded -digits 4
+report_clock_skew -hold
+report_clock_skew -setup
+
+# Exit OpenROAD
+exit
+
+# Restore original CTS_CLK_BUFFER_LIST
+echo $::env(CTS_CLK_BUFFER_LIST)
+set ::env(CTS_CLK_BUFFER_LIST) [linsert $::env(CTS_CLK_BUFFER_LIST) 0 sky130_fd_sc_hd__clkbuf_1]
+echo $::env(CTS_CLK_BUFFER_LIST)
+```
+
+This flow demonstrates how to modify the CTS buffer list, re-run CTS, perform post-CTS timing analysis with OpenROAD, and then restore the original buffer list.
+
+
+
+Screenshots of commands run and timing report generated
 
 
 
