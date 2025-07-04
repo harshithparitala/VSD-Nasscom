@@ -3159,3 +3159,19 @@ screenshots of running these commands:
 </details>  
 
 
+
+
+<details>
+<summary><b>Day 5:</b> Acknowledment </summary>   
+<br>
+  I would like to express my heartfelt gratitude to Mr. Kunal Ghosh, Co-founder of VLSI System Design (VSD) Corp. Pvt. Ltd., Mr. Mohamed Shalan from efabless.com, and Mr. Nickson Jose for their invaluable guidance and support throughout the DIGITAL VLSI SoC Design and Planning workshop.
+
+  This workshop provided a comprehensive understanding of the RTL to GDSII flow and offered hands-on experience with the complete open-source toolchain, OpenLANE. The practical exposure and expert insights shared during the sessions have greatly enriched my knowledge and enhanced my confidence in working with digital design and physical implementation workflows.
+
+  I am truly grateful for the opportunity to be part of this learning experience and for the continuous encouragement from the mentors involved.
+
+
+
+</details>  
+
+
