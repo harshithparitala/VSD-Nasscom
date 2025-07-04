@@ -1796,6 +1796,44 @@ After clicking a highlighted error region, this command prints the rule descript
 <summary><b>Day 4:</b> Pre-layout timing analysis and importance of good clock tree </summary>   
 <br>
 
+Tasks:-
+1. **Fix small DRC errors** and verify the design is ready to be inserted into the flow.  
+2. **Save the finalized layout** with a custom name and reopen it.  
+3. **Generate a LEF** file from the layout.  
+4. **Copy the new LEF** (and any required `.lib` files) into the `picorv32a/src` directory.  
+5. **Edit `config.tcl`** to reference the new library file and include the extra LEF in the OpenLane flow.  
+6. **Run OpenLane synthesis** with the newly inserted custom inverter cell.  
+7. **Reduce or eliminate new violations** introduced by the custom inverter by tweaking design parameters.  
+8. After synthesis accepts the custom inverter, **run floorplan and placement** to confirm the cell is integrated in the P & R flow.  
+9. **Perform post-synthesis timing analysis** using OpenSTA.  
+10. **Apply timing ECO fixes** to clear any remaining timing violations.  
+11. **Replace the old netlist** with the ECO-fixed netlist and rerun floorplan, placement, and CTS.  
+12. **Run post-CTS timing analysis** in OpenROAD.  
+13. **Investigate post-CTS timing** further by removing `sky130_fd_sc_hd__clkbuf_1` from `CTS_CLK_BUFFER_LIST` and re-analyzing.
+
+
+1.**Fix small DRC errors** and verify the design is ready to be inserted into the flow.  
+-
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 </details>  
 
 
