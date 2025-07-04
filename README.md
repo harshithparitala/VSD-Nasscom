@@ -1851,6 +1851,12 @@ magic -T sky130A.tech sky130_inv.mag &
 ### Screenshot: `tracks.info` of `sky130_fd_sc_hd`:
 
 
+<img width="1920" height="937" alt="Image" src="https://github.com/user-attachments/assets/bb4cba53-7718-4851-a659-1088ad8b54c0" />
+<img width="955" height="925" alt="Image" src="https://github.com/user-attachments/assets/34df0964-7bae-4f6a-81fd-a7db4e6a059f" />
+<img width="1920" height="937" alt="Image" src="https://github.com/user-attachments/assets/70e0bf0c-36ac-4f5f-b91d-502cb680a906" />
+<img width="888" height="898" alt="Image" src="https://github.com/user-attachments/assets/fb78055e-43a5-4542-841d-644409d72399" />
+<img width="888" height="898" alt="Image" src="https://github.com/user-attachments/assets/cfcf34f3-4299-4e38-a9ad-05a5716c9a2a" />
+
 
 
 ###  Commands to Set Grid as Tracks of Locali Layer in Magic (via tkcon)
@@ -1918,6 +1924,7 @@ magic -T sky130A.tech sky130_vsdinv.mag &
 
 screenshots of newly saved layout :
 
+<img width="955" height="925" alt="Image" src="https://github.com/user-attachments/assets/2a2acf7f-3d75-4fdc-a545-036833c8c1bf" />
 
 
 
@@ -1942,6 +1949,12 @@ screenshots of newly saved layout :
 lef write
 ```
 screenshots of command run :
+
+
+
+<img width="1920" height="937" alt="Image" src="https://github.com/user-attachments/assets/f11ed701-2bb7-4d29-9b43-9d3180239fd6" />
+<img width="888" height="898" alt="Image" src="https://github.com/user-attachments/assets/08b7e4c0-409f-429e-9124-ff14a1c21dae" />
+
 
 
 4.**Copy the new LEF** (and any required `.lib` files) into the `picorv32a/src` directory.  
@@ -1973,6 +1986,7 @@ ls ~/Desktop/work/tools/openlane_working_dir/openlane/designs/picorv32a/src/
 
 screenshots of command run:
 
+<img width="888" height="898" alt="Image" src="https://github.com/user-attachments/assets/36e56c15-ad38-4497-bb89-a00c1c5fb250" />   
 
 
 5.**Edit `config.tcl`** to reference the new library file and include the extra LEF in the OpenLane flow.  
@@ -1999,7 +2013,7 @@ set ::env(EXTRA_LEFS) [glob $::env(OPENLANE_ROOT)/designs/$::env(DESIGN_NAME)/sr
 
 screenshots of command run:
 
-
+<img width="888" height="898" alt="Image" src="https://github.com/user-attachments/assets/52015792-feed-4f20-9a23-351911ad897d" />
 
 6.**Run OpenLane synthesis** with the newly inserted custom inverter cell.  
 -
@@ -2044,13 +2058,22 @@ After synthesis completes, you can proceed with `run_floorplan`, `run_placement`
 
 Screenshots of commands run :
 
+<img width="888" height="898" alt="Image" src="https://github.com/user-attachments/assets/a9a660ad-53d3-4718-9ad3-0cbe792dbaac" />
 
+<img width="888" height="898" alt="Image" src="https://github.com/user-attachments/assets/f6a9ad25-6b54-4e1c-8fd6-f24461eb9056" />
+
+<img width="888" height="898" alt="Image" src="https://github.com/user-attachments/assets/151d90d9-1a06-4691-84ab-c879e90ecc5a" />
  
 7.**Reduce or eliminate new violations** introduced by the custom inverter by tweaking design parameters.  
 --
 
 
 Noting down current design values generated before modifying parameters to improve timing
+
+<img width="888" height="898" alt="Image" src="https://github.com/user-attachments/assets/1d35b7b7-40fc-43b3-bf04-8a89e65d0de0" />
+<img width="888" height="898" alt="Image" src="https://github.com/user-attachments/assets/30bcba4d-229b-4487-b00d-8a2a2c44a0a0" />
+
+
 
 ### Commands to Adjust Synthesis Parameters for Timing Optimization
 
@@ -2096,10 +2119,13 @@ run_synthesis
 
 Screenshot of merged.lef in tmp directory with our custom inverter as macro
 
+<img width="955" height="925" alt="Image" src="https://github.com/user-attachments/assets/8a3414af-7103-494e-9ae7-28d0390236d0" />
+
 
 Screenshots of commands run
 
-
+<img width="888" height="898" alt="Image" src="https://github.com/user-attachments/assets/b96d4b0c-82cf-482b-b077-0bbee2498324" />
+<img width="888" height="898" alt="Image" src="https://github.com/user-attachments/assets/770eeabd-e59c-48da-a325-6d07e6de6021" />
 
 Comparing to previously noted run values area has increased and worst negative slack has become 0
 
@@ -2123,18 +2149,21 @@ tap_decap_or
 ```
 Screenshots of commands run
 
-
+<img width="888" height="898" alt="Image" src="https://github.com/user-attachments/assets/d431fe62-af37-4479-8a30-d78545f854a2" />
 
 Screenshots of commands run
 
-
-
+<img width="888" height="898" alt="Image" src="https://github.com/user-attachments/assets/5182007b-7cd6-4474-bbb7-3f0c89069a2f" />
 
 
 ```tcl
 # Run the placement stage
 run_placement
 ```
+
+<img width="888" height="898" alt="Image" src="https://github.com/user-attachments/assets/1078182e-4272-43ff-879b-97cc166cd78c" />
+
+
 
 ---
 
@@ -2162,9 +2191,13 @@ magic -T ~/Desktop/work/tools/openlane_working_dir/pdks/sky130A/libs.tech/magic/
 
 Screenshot of placement def in magic
 
+<img width="1440" height="732" alt="Image" src="https://github.com/user-attachments/assets/52f8f479-7820-454e-af49-9a6a4add7b9e" />
+
 Screenshot of custom inverter inserted in placement def with proper abutment
 
-Command for tkcon window to view internal layers of cells
+
+<img width="1440" height="732" alt="Image" src="https://github.com/user-attachments/assets/caabd0db-9399-4c8e-b9aa-2d9c673e981d" />
+
 
 ### Viewing Internal Connectivity Layers in Magic
 
@@ -2176,9 +2209,8 @@ expand
 - `expand`: This Magic command reveals all internal routing and connectivity details within the loaded layout. Useful for visually verifying routed nets or cell connections.
 
 
+<img width="979" height="340" alt="Image" src="https://github.com/user-attachments/assets/3281e587-6642-4b99-8e79-22b423282f9d" />
 
-
-Abutment of power pins with other cell from library clearly visible
 
 
 
@@ -2309,6 +2341,15 @@ Key metrics to observe:
 
 Screenshots of commands run
 
+<img width="1853" height="910" alt="Image" src="https://github.com/user-attachments/assets/46c31089-0f79-4bf6-a536-d5a9e5d3ac85" />
+<img width="1853" height="910" alt="Image" src="https://github.com/user-attachments/assets/e8ff8659-64a8-4194-ac33-a1ddf5902b79" />
+<img width="1853" height="910" alt="Image" src="https://github.com/user-attachments/assets/47dbb4b9-a83b-419f-8bd2-2b85d5e23c58" />
+
+<img width="1853" height="910" alt="Image" src="https://github.com/user-attachments/assets/54dbbad4-c68f-4e52-8ee6-a7e8ff898eb2" />
+<img width="1853" height="910" alt="Image" src="https://github.com/user-attachments/assets/baf901a8-08d2-4445-b28f-9091ca40381b" />
+<img width="1853" height="910" alt="Image" src="https://github.com/user-attachments/assets/20f96fb6-a92f-4883-9b2b-67629fb6d956" />
+<img width="1853" height="910" alt="Image" src="https://github.com/user-attachments/assets/970cc0fb-8db1-4fac-a296-45749d868ee5" />
+
 
 
 
@@ -2372,6 +2413,19 @@ report_checks -fields {net cap slew input_pins} -digits 4
 
 screenshots of running commands :
 
+<img width="888" height="898" alt="Image" src="https://github.com/user-attachments/assets/bb27a5ea-2a24-41ec-9d54-4b90141aa351" />
+<img width="955" height="925" alt="Image" src="https://github.com/user-attachments/assets/58e9eac0-102a-4949-a13b-3e3302d94336" />
+<img width="888" height="898" alt="Image" src="https://github.com/user-attachments/assets/17fd7f42-1a7e-4b59-b7ee-f4fecd3608d4" />
+<img width="888" height="898" alt="Image" src="https://github.com/user-attachments/assets/6946a75c-53a4-497d-afa9-c6735192d712" />
+<img width="888" height="898" alt="Image" src="https://github.com/user-attachments/assets/58dc644b-03e9-4baf-a1ba-766ef0754ee5" />
+<img width="888" height="898" alt="Image" src="https://github.com/user-attachments/assets/cc6eaf44-74c0-4678-b99e-a5e48d489c0b" />
+<img width="888" height="898" alt="Image" src="https://github.com/user-attachments/assets/29ddbd2c-6b75-4f36-b9de-f79bd21ff937" />
+<img width="888" height="898" alt="Image" src="https://github.com/user-attachments/assets/e5ff840a-6950-4cad-92a5-c177429dfcb7" />
+<img width="1853" height="910" alt="Image" src="https://github.com/user-attachments/assets/6c447300-f481-4f3d-91df-dc4f1efc8105" />
+
+
+
+
 
 We started ECO fixes at wns -23.9000 and now we stand at wns -22.6173 we reduced around 1.2827 ns of violation.
 
@@ -2406,6 +2460,11 @@ write_verilog picorv32a.synthesis.v
 This updated netlist is now ready to be used in the next stages of the OpenLane flow such as floorplan, placement, and routing.
 
 Screenshot of commands run
+
+
+<img width="888" height="898" alt="Image" src="https://github.com/user-attachments/assets/86c3d5d5-2a74-418d-b8de-82975a9ba8be" />
+<img width="888" height="898" alt="Image" src="https://github.com/user-attachments/assets/1453a4d6-18e1-4dd3-8e47-104119a815ae" />
+
 
 ### Commands to Overwrite the Synthesis Netlist After Timing Optimization
 
@@ -2470,6 +2529,9 @@ This flow continues the clean design path starting from synthesis with tuned par
 
 Screenshots of commands run
 
+<img width="888" height="898" alt="Image" src="https://github.com/user-attachments/assets/5804463d-dee1-470e-a0f9-9276dead584f" />
+<img width="888" height="898" alt="Image" src="https://github.com/user-attachments/assets/63eadb2c-faf4-4c0d-80a7-2e81a4733164" />
+
 
 
 12. **Run post-CTS timing analysis** in OpenROAD.  
@@ -2523,6 +2585,10 @@ This sequence performs full post-CTS timing analysis in OpenROAD using custom co
 
 Screenshots of commands run and timing report generated
 
+<img width="1853" height="910" alt="Image" src="https://github.com/user-attachments/assets/870248f3-ac3d-4f77-b7de-16ef71b9713c" />
+<img width="1853" height="910" alt="Image" src="https://github.com/user-attachments/assets/3b392b94-61bf-4d7b-95b7-ffaa80ba7faf" />
+<img width="1853" height="910" alt="Image" src="https://github.com/user-attachments/assets/f300c57e-d0f1-48f1-b191-af45fb736b51" />
+<img width="1853" height="910" alt="Image" src="https://github.com/user-attachments/assets/56a66456-befe-48a4-962d-6a033ea8642e" />
 
 
 
@@ -2596,9 +2662,12 @@ This flow demonstrates how to modify the CTS buffer list, re-run CTS, perform po
 
 Screenshots of commands run and timing report generated
 
-
-
-
+<img width="888" height="898" alt="Image" src="https://github.com/user-attachments/assets/8641da26-d3cc-466a-9514-e985a28bbe06" />
+<img width="888" height="898" alt="Image" src="https://github.com/user-attachments/assets/306e597d-1a75-4aa3-8d13-46053850fe54" />
+<img width="888" height="898" alt="Image" src="https://github.com/user-attachments/assets/efa029f1-41b8-48fd-b07f-1dbf8d37979e" />
+<img width="888" height="898" alt="Image" src="https://github.com/user-attachments/assets/2f5a757f-f6bf-4ef9-9b94-58b77811df2d" />
+<img width="888" height="898" alt="Image" src="https://github.com/user-attachments/assets/7b62429a-fe2c-4870-a4d7-aa8da74cf5e3" />
+<img width="1853" height="910" alt="Image" src="https://github.com/user-attachments/assets/fe4c0292-2604-4a78-826a-a45c63db5792" />
 
 
 </details>  
@@ -2786,7 +2855,11 @@ This allows you to visualize the layout of the power distribution network (PDN) 
 screenshots:
 --
 
-
+<img width="888" height="898" alt="Image" src="https://github.com/user-attachments/assets/995f8ea3-bfb1-43f7-8360-61bcbbe8f41b" />
+<img width="888" height="898" alt="Image" src="https://github.com/user-attachments/assets/2279680b-3552-4480-bf53-257b00dd8b6e" />
+<img width="1920" height="937" alt="Image" src="https://github.com/user-attachments/assets/0793c1e2-9fa6-4d86-a6e2-0b14def4d159" />
+<img width="1920" height="937" alt="Image" src="https://github.com/user-attachments/assets/012614c8-e508-4bde-be63-72bb83b9d90e" />
+<img width="1920" height="937" alt="Image" src="https://github.com/user-attachments/assets/4c585b80-5c51-40a5-9a24-be5bd8bb784f" />
 
 
 
@@ -2842,9 +2915,8 @@ run_routing
 
 screenshots of running this:
 --
-
-
-
+<img width="888" height="898" alt="Image" src="https://github.com/user-attachments/assets/7eeeb555-15f6-4932-8003-f1676e86d113" />
+<img width="888" height="898" alt="Image" src="https://github.com/user-attachments/assets/335db562-dde4-485a-ab75-7e5e5a4a8202" />
 
 
 
@@ -2871,8 +2943,10 @@ This lets you visualize the final routed layout including detailed metal traces 
 Screenshots of routed def :
 -
 
+<img width="1853" height="910" alt="Image" src="https://github.com/user-attachments/assets/ddc9d50d-697f-465b-8403-42a7e4810469" />
+<img width="1920" height="937" alt="Image" src="https://github.com/user-attachments/assets/7f0c5034-92c7-446a-a37b-98ee78f635f6" />
 
-
+<img width="1652" height="877" alt="Image" src="https://github.com/user-attachments/assets/7bb26f0a-9e93-41dc-8f81-7b837f421b75" />
 
 3.Post-Route parasitic extraction using SPEF extractor.
 --
@@ -3030,7 +3104,10 @@ This sequence enables accurate post-route Static Timing Analysis (STA) using Ope
 
 screenshots of running these commands:
 --
-
+<img width="888" height="898" alt="Image" src="https://github.com/user-attachments/assets/e1a682e2-0c81-4801-ae7f-a08d344e9ece" />
+<img width="888" height="898" alt="Image" src="https://github.com/user-attachments/assets/7feb0665-6bf9-4b7a-a5cd-0fa14bc338cc" />
+<img width="888" height="898" alt="Image" src="https://github.com/user-attachments/assets/23620f83-f65f-4e4a-a12c-74731026c621" />
+<img width="955" height="925" alt="Image" src="https://github.com/user-attachments/assets/f82e63e3-3d9d-46aa-b6c3-9de9e015f666" />
 
 
 </details>  
