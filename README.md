@@ -3162,7 +3162,7 @@ screenshots of running these commands:
 
 
 <details>
-<summary><b>Day 5:</b> Acknowledment </summary>   
+<summary><b> ACK </b> Acknowledment </summary>   
 <br>
   I would like to express my heartfelt gratitude to Mr. Kunal Ghosh, Co-founder of VLSI System Design (VSD) Corp. Pvt. Ltd., Mr. Mohamed Shalan from efabless.com, and Mr. Nickson Jose for their invaluable guidance and support throughout the DIGITAL VLSI SoC Design and Planning workshop.
 
